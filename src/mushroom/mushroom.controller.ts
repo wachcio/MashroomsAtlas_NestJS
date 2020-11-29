@@ -8,16 +8,12 @@ export class MushroomController {
     @Inject(MushroomService) private mushroomService: MushroomService,
   ) {}
   @Get('/')
-  getMushroom(): MushroomList {
-    return [
-      {
-        namePL: 'Podgrzybek brunatny',
-        scientificName: 'Imleria badia',
-      },
-      {
-        namePL: 'Podgrzybek zajączek',
-        scientificName: 'Boletus subtomentosus',
-      },
-    ];
+  getMushrooms() {
+    return this.mushroomService.getMushrooms();
+  }
+
+  @Get('/createDummyMushrooms')
+  createDummyMushrooms() {
+    return this.mushroomService.createDummyMushrooms();
   }
 }
