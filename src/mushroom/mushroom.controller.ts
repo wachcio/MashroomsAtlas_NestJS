@@ -9,7 +9,7 @@ export class MushroomController {
     @Inject(MushroomService) private mushroomService: MushroomService,
   ) {}
   @Get('/')
-  getMushrooms() {
+  getMushrooms(): Promise<MushroomItem[]> {
     return this.mushroomService.getMushrooms();
   }
 

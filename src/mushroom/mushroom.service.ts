@@ -14,7 +14,9 @@ export class MushroomService {
   //   ) {}
 
   async getMushrooms(): Promise<MushroomItem[]> {
-    return MushroomItem.find();
+    return MushroomItem.find({
+      relations: ['description'],
+    });
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {
