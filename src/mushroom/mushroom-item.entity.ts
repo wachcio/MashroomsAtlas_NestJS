@@ -1,5 +1,13 @@
 import { Mushroom, MushroomApplication } from 'src/interfaces/mushroom';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { MushroomDescription } from './mushroom-description.entity';
 
 @Entity()
 export class MushroomItem extends BaseEntity implements Mushroom {
@@ -31,8 +39,9 @@ export class MushroomItem extends BaseEntity implements Mushroom {
   @Column()
   images: string;
 
-  @Column()
-  description: string;
+  @OneToOne(() => MushroomDescription)
+  @JoinColumn()
+  description: MushroomDescription;
 
   // @Column({
   //   type: 'json',

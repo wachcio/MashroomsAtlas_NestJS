@@ -1,3 +1,5 @@
+import { MushroomDescription } from 'src/mushroom/mushroom-description.entity';
+
 export enum MushroomApplication {
   edible, //jadalny
   inedible, //niejadalny
@@ -28,7 +30,7 @@ export interface Mushroom {
   isLegallyProtected: boolean; //chroniony prawnie
   approvedForTrade: boolean; //dopuszczony do handlu
   images: string; //zdjęcia
-  description: string; //ID opisu
+  description: MushroomDescription; //ID opisu
   // description: MushroomDescription; //opis
 }
 

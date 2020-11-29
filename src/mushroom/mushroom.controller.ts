@@ -14,11 +14,8 @@ export class MushroomController {
   }
 
   @Post('/')
-  createMushroom(
-    @Body() newMushroom: MushroomItem,
-    newDescription: MushroomDescription,
-  ) {
-    return this.mushroomService.createMushroom(newMushroom, newDescription);
+  createMushroom(@Body() newMushroom: MushroomItem) {
+    return this.mushroomService.createMushroom(newMushroom);
   }
 
   @Get('/createDummyMushrooms')

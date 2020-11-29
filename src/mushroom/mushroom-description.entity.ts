@@ -1,5 +1,11 @@
 import { MushroomDescriptionInterface } from 'src/interfaces/mushroom';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class MushroomDescription
@@ -43,4 +49,7 @@ export class MushroomDescription
 
   @Column()
   frequency: string;
+
+  @OneToOne(() => MushroomDescription)
+  description: MushroomDescription;
 }

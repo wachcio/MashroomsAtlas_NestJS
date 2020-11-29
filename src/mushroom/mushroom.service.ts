@@ -17,29 +17,25 @@ export class MushroomService {
     return MushroomItem.find();
   }
 
-  async createMushroom(
-    mushroom: MushroomItem,
-    mushroomDescription: MushroomDescription,
-  ): Promise<MushroomItem> {
+  async createMushroom(mushroom): Promise<MushroomItem> {
+    console.log(mushroom);
+    const newMushroom = new MushroomItem();
     const newMushroomDescription = new MushroomDescription();
-    newMushroomDescription.occurrence = mushroomDescription.occurrence;
-    newMushroomDescription.dimensions = mushroomDescription.dimensions;
-    newMushroomDescription.cap = mushroomDescription.cap;
-    newMushroomDescription.underCap = mushroomDescription.underCap;
-    newMushroomDescription.capImprint = mushroomDescription.capImprint;
-    newMushroomDescription.stem = mushroomDescription.stem;
-    newMushroomDescription.flesh = mushroomDescription.flesh;
-    newMushroomDescription.characteristics =
-      mushroomDescription.characteristics;
-    newMushroomDescription.possibleConfusion =
-      mushroomDescription.possibleConfusion;
-    newMushroomDescription.comments = mushroomDescription.comments;
-    newMushroomDescription.value = mushroomDescription.value;
-    newMushroomDescription.frequency = mushroomDescription.frequency;
+    newMushroomDescription.occurrence = mushroom.occurrence;
+    newMushroomDescription.dimensions = mushroom.dimensions;
+    newMushroomDescription.cap = mushroom.cap;
+    newMushroomDescription.underCap = mushroom.underCap;
+    newMushroomDescription.capImprint = mushroom.capImprint;
+    newMushroomDescription.stem = mushroom.stem;
+    newMushroomDescription.flesh = mushroom.flesh;
+    newMushroomDescription.characteristics = mushroom.characteristics;
+    newMushroomDescription.possibleConfusion = mushroom.possibleConfusion;
+    newMushroomDescription.comments = mushroom.comments;
+    newMushroomDescription.value = mushroom.value;
+    newMushroomDescription.frequency = mushroom.frequency;
 
     await newMushroomDescription.save();
 
-    const newMushroom = new MushroomItem();
     newMushroom.polishName = mushroom.polishName;
     newMushroom.scientificName = mushroom.scientificName;
     newMushroom.anotherNames = mushroom.anotherNames;
@@ -50,7 +46,7 @@ export class MushroomService {
 
     await newMushroom.save();
 
-    newMushroom.id = mushroom.id;
+    newMushroom.description = newMushroomDescription;
     await newMushroom.save();
     return newMushroom;
   }
