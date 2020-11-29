@@ -15,28 +15,43 @@ export class MushroomItem extends BaseEntity implements Mushroom {
   id: number;
 
   @Column({
-    length: '255',
+    type: 'varchar',
+    length: 255,
   })
   polishName: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   scientificName: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   anotherNames: string;
 
   @Column({
-    type: 'smallint',
+    type: 'varchar',
+    length: 36,
   })
   application: MushroomApplication;
 
-  @Column()
+  @Column({
+    type: 'bool',
+  })
   isLegallyProtected: boolean;
 
-  @Column()
+  @Column({
+    type: 'bool',
+  })
   approvedForTrade: boolean;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 2000,
+  })
   images: string;
 
   @OneToOne(() => MushroomDescription)

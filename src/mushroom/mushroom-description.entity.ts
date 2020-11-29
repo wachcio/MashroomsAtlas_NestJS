@@ -14,40 +14,76 @@ export class MushroomDescription
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   occurrence: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   dimensions: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   cap: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   underCap: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   capImprint: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   stem: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   flesh: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   characteristics: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   possibleConfusion: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   value: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   comments: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 1000,
+  })
   frequency: string;
 
   @OneToOne(() => MushroomDescription)

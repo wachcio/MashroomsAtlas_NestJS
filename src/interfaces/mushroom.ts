@@ -1,10 +1,10 @@
 import { MushroomDescription } from 'src/mushroom/mushroom-description.entity';
 
 export enum MushroomApplication {
-  edible, //jadalny
-  inedible, //niejadalny
-  poisonous, //trujący
-  conditionallyEdible, //warunkowo jadalny
+  edible = 'edible', //jadalny
+  inedible = 'inedible', //niejadalny
+  poisonous = 'poisonous', //trujący
+  conditionallyEdible = 'conditionallyEdible', //warunkowo jadalny
 }
 
 export interface MushroomDescriptionInterface {
