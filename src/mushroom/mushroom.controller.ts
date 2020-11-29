@@ -1,5 +1,4 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
-import { Mushroom, MushroomList } from 'src/interfaces/mushroom';
 import { MushroomItem } from './mushroom-item.entity';
 import { MushroomService } from './mushroom.service';
 
