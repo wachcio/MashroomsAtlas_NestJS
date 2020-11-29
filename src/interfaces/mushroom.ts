@@ -1,11 +1,11 @@
-enum MushroomApplication {
+export enum MushroomApplication {
   edible, //jadalny
   inedible, //niejadalny
   poisonous, //trujący
   conditionallyEdible, //warunkowo jadalny
 }
 
-export interface MushroomDescription {
+export interface MushroomDescriptionInterface {
   occurrence: string; //występowanie
   dimensions: string; //wymiary
   cap: string; //kapelusz
@@ -27,8 +27,9 @@ export interface Mushroom {
   application: MushroomApplication; //zastosowanie
   isLegallyProtected: boolean; //chroniony prawnie
   approvedForTrade: boolean; //dopuszczony do handlu
-  images: string[]; //zdjęcia
-  description: MushroomDescription; //opis
+  images: string; //zdjęcia
+  descriptionID: string; //ID opisu
+  // description: MushroomDescription; //opis
 }
 
 export type MushroomList = Mushroom[];

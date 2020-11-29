@@ -9,13 +9,13 @@ export class MushroomService {
   //     private mushroomService: MushroomService,
   //   ) {}
 
-  async getMushrooms() {
-    return await MushroomItem.find();
+  async getMushrooms(): Promise<MushroomItem[]> {
+    return MushroomItem.find();
   }
 
   async createMushroom(mushroom: MushroomItem): Promise<MushroomItem> {
     const newMushroom = new MushroomItem();
-    newMushroom.namePL = mushroom.namePL;
+    newMushroom.polishName = mushroom.polishName;
     newMushroom.scientificName = mushroom.scientificName;
     await newMushroom.save();
 
@@ -24,13 +24,13 @@ export class MushroomService {
 
   async createDummyMushrooms(): Promise<MushroomItem[]> {
     const newMushroom = new MushroomItem();
-    newMushroom.namePL = 'Podgrzybek brunatny';
+    newMushroom.polishName = 'Podgrzybek brunatny';
     newMushroom.scientificName = 'Imleria badia';
 
     await newMushroom.save();
 
     const newMushroom2 = new MushroomItem();
-    newMushroom2.namePL = 'Podgrzybek zajączek';
+    newMushroom2.polishName = 'Podgrzybek zajączek';
     newMushroom2.scientificName = 'Boletus subtomentosus';
 
     await newMushroom2.save();
