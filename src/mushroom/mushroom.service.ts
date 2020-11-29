@@ -20,7 +20,6 @@ export class MushroomService {
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {
-    console.log(mushroom);
     const newMushroom = new MushroomItem();
     const newMushroomDescription = new MushroomDescription();
     newMushroomDescription.occurrence = mushroom.occurrence;
