@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
 import { MushroomService } from './mushroom.service';
 
@@ -13,8 +14,11 @@ export class MushroomController {
   }
 
   @Post('/')
-  createMushroom(@Body() newMushroom: MushroomItem) {
-    return this.mushroomService.createMushroom(newMushroom);
+  createMushroom(
+    @Body() newMushroom: MushroomItem,
+    newDescription: MushroomDescription,
+  ) {
+    return this.mushroomService.createMushroom(newMushroom, newDescription);
   }
 
   @Get('/createDummyMushrooms')

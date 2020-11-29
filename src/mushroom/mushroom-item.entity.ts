@@ -32,7 +32,7 @@ export class MushroomItem extends BaseEntity implements Mushroom {
   images: string;
 
   @Column()
-  descriptionID: string;
+  description: string;
 
   // @Column({
   //   type: 'json',

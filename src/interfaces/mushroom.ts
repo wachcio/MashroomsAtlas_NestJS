@@ -28,7 +28,7 @@ export interface Mushroom {
   isLegallyProtected: boolean; //chroniony prawnie
   approvedForTrade: boolean; //dopuszczony do handlu
   images: string; //zdjęcia
-  descriptionID: string; //ID opisu
+  description: string; //ID opisu
   // description: MushroomDescription; //opis
 }
 
