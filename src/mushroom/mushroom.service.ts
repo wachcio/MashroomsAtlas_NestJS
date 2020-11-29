@@ -13,6 +13,15 @@ export class MushroomService {
     return await MushroomItem.find();
   }
 
+  async createMushroom(mushroom: MushroomItem): Promise<MushroomItem> {
+    const newMushroom = new MushroomItem();
+    newMushroom.namePL = mushroom.namePL;
+    newMushroom.scientificName = mushroom.scientificName;
+    await newMushroom.save();
+
+    return newMushroom;
+  }
+
   async createDummyMushrooms(): Promise<MushroomItem[]> {
     const newMushroom = new MushroomItem();
     newMushroom.namePL = 'Podgrzybek brunatny';

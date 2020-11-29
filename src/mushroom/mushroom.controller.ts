@@ -1,5 +1,6 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { Mushroom, MushroomList } from 'src/interfaces/mushroom';
+import { MushroomItem } from './mushroom-item.entity';
 import { MushroomService } from './mushroom.service';
 
 @Controller('mushroom')
@@ -10,6 +11,11 @@ export class MushroomController {
   @Get('/')
   getMushrooms() {
     return this.mushroomService.getMushrooms();
+  }
+
+  @Post('/')
+  createMushroom(@Body() newMushroom: MushroomItem) {
+    return this.mushroomService.createMushroom(newMushroom);
   }
 
   @Get('/createDummyMushrooms')
