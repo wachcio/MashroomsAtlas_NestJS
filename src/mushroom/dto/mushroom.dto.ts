@@ -1,5 +1,3 @@
-import { MushroomDescription } from 'src/mushroom/mushroom-description.entity';
-
 export enum MushroomApplication {
   edible = 'edible', //jadalny
   inedible = 'inedible', //niejadalny
@@ -7,7 +5,7 @@ export enum MushroomApplication {
   conditionallyEdible = 'conditionallyEdible', //warunkowo jadalny
 }
 
-export interface MushroomDescriptionInterface {
+export class MushroomDescriptionDto {
   occurrence: string; //występowanie
   dimensions: string; //wymiary
   cap: string; //kapelusz
@@ -22,7 +20,7 @@ export interface MushroomDescriptionInterface {
   frequency: string; //częstotliwość występowania
 }
 
-export interface Mushroom {
+export class MushroomDto {
   polishName: string; //nazwa polska
   scientificName: string; //nazwa naukowa
   anotherNames: string; //inne nazwy
@@ -30,8 +28,5 @@ export interface Mushroom {
   isLegallyProtected: boolean; //chroniony prawnie
   approvedForTrade: boolean; //dopuszczony do handlu
   images: string; //zdjęcia
-  description: MushroomDescription; //ID opisu
-  // description: MushroomDescription; //opis
+  description: MushroomDescriptionDto; //ID opisu
 }
-
-export type MushroomList = Mushroom[];

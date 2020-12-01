@@ -1,4 +1,4 @@
-import { MushroomDescriptionInterface } from 'src/interfaces/mushroom';
+import { MushroomDescriptionDto } from 'src/mushroom/dto/mushroom.dto';
 import {
   BaseEntity,
   Column,
@@ -10,7 +10,7 @@ import {
 @Entity()
 export class MushroomDescription
   extends BaseEntity
-  implements MushroomDescriptionInterface {
+  implements MushroomDescriptionDto {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 

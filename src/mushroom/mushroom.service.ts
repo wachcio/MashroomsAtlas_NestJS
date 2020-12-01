@@ -1,8 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import {
-  Mushroom,
-  MushroomDescriptionInterface,
-} from 'src/interfaces/mushroom';
+  MushroomDto,
+  MushroomDescriptionDto,
+} from 'src/mushroom/dto/mushroom.dto';
 import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
 
