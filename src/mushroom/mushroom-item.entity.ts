@@ -15,7 +15,7 @@ import { MushroomDescription } from './mushroom-description.entity';
 @Entity()
 export class MushroomItem extends BaseEntity implements MushroomDto {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({
     type: 'varchar',

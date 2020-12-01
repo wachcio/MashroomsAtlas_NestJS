@@ -1,4 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { identity } from 'rxjs';
 import {
   MushroomDto,
   MushroomDescriptionDto,
@@ -13,8 +14,17 @@ export class MushroomService {
   //     private mushroomService: MushroomService,
   //   ) {}
 
-  async getMushrooms(): Promise<MushroomItem[]> {
+  async getAllMushrooms(): Promise<MushroomItem[]> {
     return MushroomItem.find({
+      relations: ['description'],
+    });
+  }
+
+  async getOneMushroom(id: string): Promise<MushroomItem> {
+    return MushroomItem.findOne({
+      where: {
+        id,
+      },
       relations: ['description'],
     });
   }
