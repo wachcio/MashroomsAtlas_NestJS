@@ -4,6 +4,7 @@ import {
   MushroomDto,
   MushroomDescriptionDto,
 } from 'src/mushroom/dto/mushroom.dto';
+import { Like } from 'typeorm';
 import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
 
@@ -20,11 +21,15 @@ export class MushroomService {
     });
   }
 
-  async getOneMushroom(id: string): Promise<MushroomItem> {
-    return MushroomItem.findOne({
-      where: {
-        id,
-      },
+  async findMushrooms(searchText: string): Promise<MushroomItem[]> {
+    return MushroomItem.find({
+      where: [
+        { id: searchText },
+        { polishName: Like(`%${searchText}%`) },
+        { scientificName: Like(`%${searchText}%`) },
+        { anotherNames: Like(`%${searchText}%`) },
+        { application: Like(`%${searchText}%`) },
+      ],
       relations: ['description'],
     });
   }

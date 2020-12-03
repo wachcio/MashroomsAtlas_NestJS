@@ -12,9 +12,11 @@ export class MushroomController {
     return this.mushroomService.getAllMushrooms();
   }
 
-  @Get('/:id')
-  getOneMushroom(@Param('id') id: string): Promise<MushroomItem> {
-    return this.mushroomService.getOneMushroom(id);
+  @Get('/:searchText')
+  findMushrooms(
+    @Param('searchText') searchText: string,
+  ): Promise<MushroomItem[]> {
+    return this.mushroomService.findMushrooms(searchText);
   }
 
   @Post('/')
