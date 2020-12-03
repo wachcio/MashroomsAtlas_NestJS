@@ -20,12 +20,14 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
   @Column({
     type: 'varchar',
     length: 255,
+    unique: true,
   })
   polishName: string;
 
   @Column({
     type: 'varchar',
     length: 255,
+    unique: true,
   })
   scientificName: string;
 
@@ -65,8 +67,16 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
   @JoinColumn()
   description: MushroomDescription;
 
-  // @Column({
-  //   type: 'json',
-  // })
-  // description: MushroomDescription;
+  @Column('timestamp', {
+    precision: 0,
+    default: () => 'CURRENT_TIMESTAMP(3)',
+  })
+  createAt: Date;
+
+  @Column('timestamp', {
+    precision: 0,
+    default: () => 'CURRENT_TIMESTAMP(3)',
+    onUpdate: 'CURRENT_TIMESTAMP(3)',
+  })
+  updateAt: Date;
 }
