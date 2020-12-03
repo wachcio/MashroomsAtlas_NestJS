@@ -52,10 +52,14 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
   approvedForTrade: boolean;
 
   @Column({
-    type: 'varchar',
-    length: 2000,
+    type: 'json',
   })
-  images: string;
+  images: string[];
+  // @Column({
+  //   type: 'varchar',
+  //   length: 2000,
+  // })
+  // images: string;
 
   @OneToOne(() => MushroomDescription)
   @JoinColumn()
