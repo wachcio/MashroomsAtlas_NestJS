@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+} from '@nestjs/common';
+import { MushroomDto } from './dto/mushroom.dto';
 import { MushroomItem } from './mushroom-item.entity';
 import { MushroomService } from './mushroom.service';
 
@@ -22,6 +31,11 @@ export class MushroomController {
   @Post('/')
   createMushroom(@Body() newMushroom: MushroomItem) {
     return this.mushroomService.createMushroom(newMushroom);
+  }
+
+  @Delete('/:id')
+  deleteMushroom(@Param('id') id: string): Promise<{}> {
+    return this.mushroomService.deleteMushroom(id);
   }
 
   @Get('/createDummyMushrooms')

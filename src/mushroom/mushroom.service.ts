@@ -28,7 +28,6 @@ export class MushroomService {
         { polishName: Like(`%${searchText}%`) },
         { scientificName: Like(`%${searchText}%`) },
         { anotherNames: Like(`%${searchText}%`) },
-        { application: Like(`%${searchText}%`) },
       ],
       relations: ['description'],
     });
@@ -65,6 +64,23 @@ export class MushroomService {
     newMushroom.description = newMushroomDescription;
     await newMushroom.save();
     return newMushroom;
+  }
+
+  async deleteMushroom(id): Promise<{}> {
+    console.log(id);
+
+    const descriptionId = await MushroomItem.findOne({
+      where: [{ id }],
+      relations: ['description'],
+    });
+
+    await MushroomItem.delete(id);
+    await MushroomDescription.delete({ id: descriptionId.description.id });
+
+    return {
+      statusCode: 204,
+      message: 'Delete ok.',
+    };
   }
 
   async createDummyMushrooms(): Promise<MushroomItem[]> {
