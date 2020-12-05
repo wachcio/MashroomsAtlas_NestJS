@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Like } from 'typeorm';
+import { Like, UpdateResult } from 'typeorm';
+import { MushroomDescriptionDto } from './dto/mushroom.dto';
 import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
 
@@ -31,6 +32,7 @@ export class MushroomService {
   async createMushroom(mushroom): Promise<MushroomItem> {
     const newMushroom = new MushroomItem();
     const newMushroomDescription = new MushroomDescription();
+
     newMushroomDescription.occurrence = mushroom.occurrence;
     newMushroomDescription.dimensions = mushroom.dimensions;
     newMushroomDescription.cap = mushroom.cap;
@@ -62,8 +64,6 @@ export class MushroomService {
   }
 
   async deleteMushroom(id) {
-    console.log(id);
-
     const descriptionId = await MushroomItem.findOne({
       where: [{ id }],
       relations: ['description'],
@@ -78,6 +78,21 @@ export class MushroomService {
 
     await MushroomItem.delete(id);
     await MushroomDescription.delete({ id: descriptionId.description.id });
+  }
+
+  async updateMushroom(id, updateMushroom) {
+    const descriptionId = await MushroomItem.findOne({
+      where: [{ id }],
+      relations: ['description'],
+    });
+
+    await MushroomDescription.update(
+      descriptionId.description.id,
+      updateMushroom.description,
+    );
+    updateMushroom.description = descriptionId.description.id;
+
+    return await MushroomItem.update(id, updateMushroom);
   }
 
   async createDummyMushrooms(): Promise<MushroomItem[]> {

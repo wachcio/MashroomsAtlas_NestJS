@@ -7,7 +7,9 @@ import {
   Inject,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
+import { UpdateResult } from 'typeorm';
 import { MushroomDto } from './dto/mushroom.dto';
 import { MushroomItem } from './mushroom-item.entity';
 import { MushroomService } from './mushroom.service';
@@ -38,6 +40,14 @@ export class MushroomController {
   @HttpCode(204)
   deleteMushroom(@Param('id') id: string) {
     return this.mushroomService.deleteMushroom(id);
+  }
+
+  @Put('/:id')
+  update(
+    @Param('id') id: string,
+    @Body() updateMushroom: MushroomItem,
+  ): Promise<UpdateResult> {
+    return this.mushroomService.updateMushroom(id, updateMushroom);
   }
 
   @Get('/createDummyMushrooms')

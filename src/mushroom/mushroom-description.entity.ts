@@ -86,6 +86,6 @@ export class MushroomDescription
   })
   frequency: string;
 
-  @OneToOne(() => MushroomDescription)
+  @OneToOne(() => MushroomDescription, { cascade: true })
   description: MushroomDescription;
 }

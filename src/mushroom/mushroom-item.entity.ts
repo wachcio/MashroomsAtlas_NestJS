@@ -63,7 +63,7 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
   })
   images: string;
 
-  @OneToOne(() => MushroomDescription)
+  @OneToOne(() => MushroomDescription, { cascade: true })
   @JoinColumn()
   description: MushroomDescription;
 
