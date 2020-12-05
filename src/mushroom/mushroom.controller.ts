@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Inject,
   Param,
   Post,
@@ -34,7 +35,8 @@ export class MushroomController {
   }
 
   @Delete('/:id')
-  deleteMushroom(@Param('id') id: string): Promise<{}> {
+  @HttpCode(204)
+  deleteMushroom(@Param('id') id: string) {
     return this.mushroomService.deleteMushroom(id);
   }
 

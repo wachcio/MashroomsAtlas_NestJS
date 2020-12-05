@@ -1,9 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { identity } from 'rxjs';
-import {
-  MushroomDto,
-  MushroomDescriptionDto,
-} from 'src/mushroom/dto/mushroom.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Like } from 'typeorm';
 import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
@@ -66,7 +61,7 @@ export class MushroomService {
     return newMushroom;
   }
 
-  async deleteMushroom(id): Promise<{}> {
+  async deleteMushroom(id) {
     console.log(id);
 
     const descriptionId = await MushroomItem.findOne({
@@ -74,13 +69,15 @@ export class MushroomService {
       relations: ['description'],
     });
 
+    if (!descriptionId) {
+      throw new HttpException(
+        `I can not find mushroom id ${id}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
     await MushroomItem.delete(id);
     await MushroomDescription.delete({ id: descriptionId.description.id });
-
-    return {
-      statusCode: 204,
-      message: 'Delete ok.',
-    };
   }
 
   async createDummyMushrooms(): Promise<MushroomItem[]> {
