@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Like, UpdateResult } from 'typeorm';
-import { MushroomDescriptionDto } from './dto/mushroom.dto';
+import { Like } from 'typeorm';
 import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
 
