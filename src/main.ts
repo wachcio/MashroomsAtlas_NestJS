@@ -13,6 +13,7 @@ async function bootstrap() {
   //     transform: true,
   //   }),
   // );
+  console.log('NODE_ENV: ', process.env.NODE_ENV); // 'local'
   await app.listen(3000);
 }
 bootstrap();
