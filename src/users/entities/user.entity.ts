@@ -1,12 +1,4 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { ItemInBasket } from '../basket/item-in-basket.entity';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity {
@@ -26,7 +18,4 @@ export class User extends BaseEntity {
     default: null,
   })
   currentTokenId: string | null;
-
-  @OneToMany((type) => ItemInBasket, (entity) => entity.user)
-  itemsInBasket: ItemInBasket[];
 }
