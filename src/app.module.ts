@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { MushroomModule } from './mushroom/mushroom.module';
 
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -26,9 +26,13 @@ import { UsersModule } from './users/users.module';
       entities: [process.env.TYPEORM_ENTITIES],
       logging: Boolean(process.env.TYPEORM_LOGGING),
       synchronize: Boolean(process.env.TYPEORM_SYNCHRONIZE),
+      bigNumberStrings: Boolean(process.env.TYPEORM_BIG_NUMBER_STRING),
+      // debug: true,
+      dropSchema: true,
+      cache: false,
     }),
     MushroomModule,
-    UsersModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

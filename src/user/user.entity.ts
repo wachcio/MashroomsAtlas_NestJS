@@ -7,8 +7,9 @@ export class User extends BaseEntity {
 
   @Column({
     length: 255,
+    unique: true,
   })
-  email: string;
+  username: string;
 
   @Column()
   pwdHash: string;
