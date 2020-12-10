@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   console.log('ENV: ', process.env); // 'local'
@@ -15,6 +16,8 @@ async function bootstrap() {
   //   }),
   // );
   console.log('NODE_ENV: ', process.env.NODE_ENV); // 'local'
+
+  app.use(cookieParser());
 
   await app.listen(3000);
 }

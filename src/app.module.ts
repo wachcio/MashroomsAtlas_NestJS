@@ -7,6 +7,8 @@ import { MushroomModule } from './mushroom/mushroom.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 
+import { AuthModule } from './auth/auth.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,11 +29,13 @@ import { UserModule } from './user/user.module';
       logging: Boolean(process.env.TYPEORM_LOGGING),
       synchronize: Boolean(process.env.TYPEORM_SYNCHRONIZE),
       bigNumberStrings: Boolean(process.env.TYPEORM_BIG_NUMBER_STRING),
-      dropSchema: Boolean(process.env.TYPEORM_DROP_SCHEMA),
-      cache: Boolean(process.env.TYPEORM_CACHE),
+      // dropSchema: Boolean(process.env.TYPEORM_DROP_SCHEMA),
+      // cache: Boolean(process.env.TYPEORM_CACHE),
     }),
     MushroomModule,
     UserModule,
+
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
