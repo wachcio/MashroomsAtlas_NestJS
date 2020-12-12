@@ -29,6 +29,10 @@ export class MushroomController {
   getAllMushrooms(): Promise<MushroomItem[]> {
     return this.mushroomService.getAllMushrooms();
   }
+  @Get('/shortdata')
+  getShortDataAllMushrooms(): Promise<MushroomItem[]> {
+    return this.mushroomService.getShortDataAllMushrooms();
+  }
 
   @Get('/:searchText')
   findMushrooms(

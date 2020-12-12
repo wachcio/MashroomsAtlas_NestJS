@@ -16,6 +16,18 @@ export class MushroomService {
     });
   }
 
+  async getShortDataAllMushrooms(): Promise<MushroomItem[]> {
+    return MushroomItem.find({
+      select: [
+        'id',
+        'polishName',
+        'scientificName',
+        'anotherNames',
+        'application',
+      ],
+    });
+  }
+
   async findMushrooms(searchText: string): Promise<MushroomItem[]> {
     return MushroomItem.find({
       where: [
