@@ -1,10 +1,13 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Inject,
   Param,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -13,6 +16,7 @@ import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
 import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';
 import { User } from './user.entity';
+import { UpdateResult } from 'typeorm';
 
 @Controller('user')
 export class UserController {
@@ -34,5 +38,21 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
   getOneUser(@Param('id') id: string): Promise<User> {
     return this.userService.getOneUser(id);
+  }
+
+  @Delete('/:id')
+  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
+  @HttpCode(204)
+  deleteUser(@Param('id') id: string) {
+    return this.userService.deleteUser(id);
+  }
+
+  @Put('/:id')
+  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
+  updateUser(
+    @Param('id') id: string,
+    @Body() updateUser: RegisterDto,
+  ): Promise<UpdateResult> {
+    return this.userService.updateUser(id, updateUser);
   }
 }

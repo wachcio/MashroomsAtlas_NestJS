@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RegisterDto, userRoleEnum } from './dto/register.dto';
 import { RegisterUserResponse } from '../interfaces/user';
 import { User } from './user.entity';
@@ -32,6 +32,27 @@ export class UserService {
     return await User.findOne(id);
   }
 
+  async deleteUser(id: string) {
+    const userId = await User.findOne({
+      where: [{ id }],
+    });
+
+    if (!userId) {
+      throw new HttpException(
+        `I can not find user id ${id}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return User.delete(id);
+  }
+  async updateUser(id: string, updateUser: RegisterDto) {
+    const user = new User();
+    user.username = updateUser.username;
+    user.pwdHash = hashPwd(updateUser.pwd);
+    user.role = updateUser.role;
+    return await User.update(id, user);
+  }
   @Command({
     command: 'list',
     description: 'List all of the users',
