@@ -25,6 +25,9 @@ export class UserService {
     return this.filter(user);
   }
 
+  async getAllUsers(): Promise<User[]> {
+    return await User.find();
+  }
   async getOneUser(id: string): Promise<User> {
     return await User.findOne(id);
   }

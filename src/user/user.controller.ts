@@ -18,6 +18,12 @@ import { User } from './user.entity';
 export class UserController {
   constructor(@Inject(UserService) private userService: UserService) {}
 
+  @Get('/')
+  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
+  getAllUsers(): Promise<User[]> {
+    return this.userService.getAllUsers();
+  }
+
   @Post('/register')
   @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
   register(@Body() newUser: RegisterDto): Promise<RegisterUserResponse> {
