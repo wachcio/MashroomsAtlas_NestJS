@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RegisterDto } from './dto/register.dto';
+import { RegisterDto, userRoleEnum } from './dto/register.dto';
 import { RegisterUserResponse } from '../interfaces/user';
 import { User } from './user.entity';
 import { hashPwd } from '../utils/hash-pwd';
@@ -11,14 +11,15 @@ import { Command, Console } from 'nestjs-console';
 })
 export class UserService {
   filter(user: User): RegisterUserResponse {
-    const { id, username } = user;
-    return { id, username };
+    const { id, username, role } = user;
+    return { id, username, role };
   }
 
   async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
     const user = new User();
     user.username = newUser.username;
     user.pwdHash = hashPwd(newUser.pwd);
+    user.role = newUser.role;
     await user.save();
 
     return this.filter(user);
@@ -40,11 +41,12 @@ export class UserService {
     command: 'add <username> <pwd>',
     description: 'Add new user',
   })
-  async addUsersCmd(username: string, pwd: string) {
+  async addUsersCmd(username: string, pwd: string, role: userRoleEnum) {
     console.log(
       await this.register({
         username,
         pwd,
+        role,
       }),
     );
   }

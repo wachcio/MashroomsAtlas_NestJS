@@ -1,4 +1,5 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { userRoleEnum } from './dto/register.dto';
 
 @Entity()
 export class User extends BaseEntity {
@@ -13,6 +14,13 @@ export class User extends BaseEntity {
 
   @Column()
   pwdHash: string;
+
+  @Column({
+    default: 'user',
+    type: 'varchar',
+    length: 20,
+  })
+  role: userRoleEnum;
 
   @Column({
     nullable: true,

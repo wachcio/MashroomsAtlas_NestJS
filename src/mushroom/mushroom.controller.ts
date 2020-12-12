@@ -12,6 +12,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserObj } from 'src/decorators/user-obj.decorator';
+import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';
+import { UserRoleModeratorsGuard } from 'src/guards/user-role-moderators.guard';
 import { User } from 'src/user/user.entity';
 import { UpdateResult } from 'typeorm';
 import { MushroomDto } from './dto/mushroom.dto';
@@ -36,7 +38,7 @@ export class MushroomController {
   }
 
   @Post('/')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), UserRoleModeratorsGuard)
   createMushroom(@Body() newMushroom: MushroomItem, @UserObj() user: User) {
     console.log(user);
 
@@ -44,12 +46,14 @@ export class MushroomController {
   }
 
   @Delete('/:id')
+  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
   @HttpCode(204)
   deleteMushroom(@Param('id') id: string) {
     return this.mushroomService.deleteMushroom(id);
   }
 
   @Put('/:id')
+  @UseGuards(AuthGuard('jwt'), UserRoleModeratorsGuard)
   update(
     @Param('id') id: string,
     @Body() updateMushroom: MushroomItem,
