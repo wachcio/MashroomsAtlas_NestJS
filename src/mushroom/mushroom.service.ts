@@ -105,20 +105,4 @@ export class MushroomService {
 
     return await MushroomItem.update(id, updateMushroom);
   }
-
-  async createDummyMushrooms(): Promise<MushroomItem[]> {
-    const newMushroom = new MushroomItem();
-    newMushroom.polishName = 'Podgrzybek brunatny';
-    newMushroom.scientificName = 'Imleria badia';
-
-    await newMushroom.save();
-
-    const newMushroom2 = new MushroomItem();
-    newMushroom2.polishName = 'Podgrzybek zajączek';
-    newMushroom2.scientificName = 'Boletus subtomentosus';
-
-    await newMushroom2.save();
-
-    return [newMushroom, newMushroom2];
-  }
 }
