@@ -2,6 +2,7 @@ export enum MushroomApplication {
   edible = 'edible', //jadalny
   inedible = 'inedible', //niejadalny
   poisonous = 'poisonous', //trujący
+  deadlyPoisonous = 'deadlyPoisonous', //śmiertelnie trujący
   conditionallyEdible = 'conditionallyEdible', //warunkowo jadalny
 }
 
