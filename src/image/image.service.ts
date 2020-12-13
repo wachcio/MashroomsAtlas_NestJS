@@ -7,6 +7,28 @@ import * as path from 'path';
 
 @Injectable()
 export class ImageService {
+  async getImage(id: string, res: any) {
+    try {
+      const one = await Image.findOne({ mushroomId: id });
+
+      if (!one) {
+        throw new Error('No object found!');
+      }
+
+      if (!one.imageName) {
+        throw new Error('No photo in this entity!');
+      }
+
+      res.sendFile(one.imageName, {
+        root: path.join(storageDir(), 'mushroom-photos'),
+      });
+    } catch (e) {
+      res.json({
+        error: e.message,
+      });
+    }
+  }
+
   async create(image, files: MulterDiskUploadedFiles): Promise<Image> {
     const photo = files?.photo?.[0] ?? null;
 

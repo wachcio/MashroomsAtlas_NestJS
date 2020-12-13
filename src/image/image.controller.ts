@@ -8,6 +8,7 @@ import {
   Delete,
   UploadedFiles,
   UseInterceptors,
+  Res,
 } from '@nestjs/common';
 import { ImageService } from './image.service';
 import { ImageDto } from './dto/image.dto';
@@ -18,6 +19,11 @@ import { MulterDiskUploadedFiles } from '../interfaces/files';
 @Controller('image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
+
+  @Get('/:id')
+  async getImage(@Param('id') id: string, @Res() res: any): Promise<any> {
+    return this.imageService.getImage(id, res);
+  }
 
   @Post('/')
   @UseInterceptors(
