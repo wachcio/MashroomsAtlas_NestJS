@@ -66,7 +66,6 @@ export class MushroomService {
     newMushroom.application = mushroom.application;
     newMushroom.isLegallyProtected = mushroom.isLegallyProtected;
     newMushroom.approvedForTrade = mushroom.approvedForTrade;
-    newMushroom.images = mushroom.images;
 
     await newMushroom.save();
 
