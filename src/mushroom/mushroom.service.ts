@@ -22,8 +22,7 @@ export class MushroomService {
     // });
 
     for (let i = 0; i < item.length; i++) {
-      const images = await Image.count({ mushroomId: item[i].id });
-      item[i].images = images;
+      item[i].images = await Image.count({ mushroomId: item[i].id });
       await item[i].save();
     }
 
@@ -63,8 +62,7 @@ export class MushroomService {
     // });
 
     for (let i = 0; i < item.length; i++) {
-      const images = await Image.count({ mushroomId: item[i].id });
-      item[i].images = images;
+      item[i].images = await Image.count({ mushroomId: item[i].id });
       await item[i].save();
     }
 
