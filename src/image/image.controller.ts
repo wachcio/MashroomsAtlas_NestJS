@@ -9,6 +9,7 @@ import {
   UploadedFiles,
   UseInterceptors,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { ImageService } from './image.service';
 import { ImageDto } from './dto/image.dto';
@@ -16,6 +17,9 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import { multerStorage, storageDir } from '../utils/storage';
 import { MulterDiskUploadedFiles } from '../interfaces/files';
+import { AuthGuard } from '@nestjs/passport';
+import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';
+import { UserRoleModeratorsGuard } from 'src/guards/user-role-moderators.guard';
 @Controller('image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
@@ -35,6 +39,7 @@ export class ImageController {
   }
 
   @Post('/')
+  @UseGuards(AuthGuard('jwt'), UserRoleModeratorsGuard)
   @UseInterceptors(
     FileFieldsInterceptor(
       [
@@ -54,11 +59,13 @@ export class ImageController {
   }
 
   @Get('/mushroom')
+  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
   findAll() {
     return this.imageService.findAll();
   }
 
   @Get('/mushroom/:mushroomId')
+  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
   findOne(@Param('mushroomId') mushroomId: string) {
     return this.imageService.findOne(mushroomId);
   }
@@ -69,6 +76,7 @@ export class ImageController {
   // }
 
   @Delete('/:mushroomId/:imageNumber')
+  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
   remove(
     @Param('mushroomId') mushroomId: string,
     @Param('imageNumber') imageNumber: number,

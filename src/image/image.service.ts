@@ -69,9 +69,9 @@ export class ImageService {
     return Image.find({ mushroomId });
   }
 
-  async update(id: number, Image: Image) {
-    return `This action updates a #${id} image`;
-  }
+  // async update(id: number, Image: Image) {
+  //   return `This action updates a #${id} image`;
+  // }
 
   async remove(id: string, imageNumber: number) {
     const image = await Image.find({ mushroomId: id });
