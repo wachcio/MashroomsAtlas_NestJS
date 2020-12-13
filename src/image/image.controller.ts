@@ -24,9 +24,9 @@ export class ImageController {
     return this.imageService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.imageService.findOne(+id);
+  @Get(':mushroomId')
+  findOne(@Param('mushroomId') mushroomId: string) {
+    return this.imageService.findOne(mushroomId);
   }
 
   // @Put(':id')

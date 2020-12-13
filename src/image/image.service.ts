@@ -11,11 +11,11 @@ export class ImageService {
   }
 
   async findAll() {
-    return `This action returns all image`;
+    return await Image.find();
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} image`;
+  async findOne(mushroomId: string) {
+    return Image.find({ mushroomId });
   }
 
   async update(id: number, Image: Image) {
