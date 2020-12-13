@@ -29,4 +29,5 @@ export class MushroomDto {
   isLegallyProtected: boolean; //chroniony prawnie
   approvedForTrade: boolean; //dopuszczony do handlu
   description: MushroomDescriptionDto; //ID opisu
+  images: number;
 }

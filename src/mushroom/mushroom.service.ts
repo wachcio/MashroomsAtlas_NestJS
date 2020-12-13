@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Like } from 'typeorm';
 import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
+import { Image } from '../image/entities/image.entity';
 
 @Injectable()
 export class MushroomService {
@@ -11,9 +12,18 @@ export class MushroomService {
   //   ) {}
 
   async getAllMushrooms(): Promise<MushroomItem[]> {
-    return MushroomItem.find({
+    const item = await MushroomItem.find({
       relations: ['description'],
     });
+
+    item.map(async (v) => {
+      const images = await Image.count({ mushroomId: v.id });
+
+      v.images = images;
+      await v.save();
+    });
+
+    return item;
   }
 
   async getShortDataAllMushrooms(): Promise<MushroomItem[]> {
@@ -29,7 +39,7 @@ export class MushroomService {
   }
 
   async findMushrooms(searchText: string): Promise<MushroomItem[]> {
-    return MushroomItem.find({
+    const item = await MushroomItem.find({
       where: [
         { id: searchText },
         { polishName: Like(`%${searchText}%`) },
@@ -39,6 +49,16 @@ export class MushroomService {
       ],
       relations: ['description'],
     });
+
+    item.map(async (v) => {
+      const images = await Image.count({ mushroomId: v.id });
+
+      v.images = images;
+
+      await v.save();
+    });
+
+    return item;
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {

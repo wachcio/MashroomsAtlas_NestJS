@@ -1,3 +1,4 @@
+import { type } from 'os';
 import {
   MushroomDto,
   MushroomApplication,
@@ -69,4 +70,10 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
     onUpdate: 'CURRENT_TIMESTAMP(3)',
   })
   updateAt: Date;
+
+  @Column({
+    type: 'int',
+    nullable: true,
+  })
+  images: number;
 }
