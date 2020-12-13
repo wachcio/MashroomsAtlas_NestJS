@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MulterDiskUploadedFiles } from 'src/interceptors/files';
 import { storageDir } from 'src/utils/storage';
 import { Image } from './entities/image.entity';
@@ -9,16 +9,14 @@ import * as path from 'path';
 export class ImageService {
   async getImagesCount(id: string, res: any) {
     try {
-      const one = await Image.find({ mushroomId: id });
-      console.log(one.length);
-
-      res.send({ count: one.length });
+      res.send({ count: await Image.count({ mushroomId: id }) });
     } catch (e) {
       res.json({
         error: e.message,
       });
     }
   }
+
   async getImage(id: string, imageNumber: number, res: any) {
     try {
       const one = await Image.find({ mushroomId: id });
@@ -75,7 +73,27 @@ export class ImageService {
     return `This action updates a #${id} image`;
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} image`;
+  async remove(id: string, imageNumber: number) {
+    const image = await Image.find({ mushroomId: id });
+
+    if (!image[imageNumber - 1]) {
+      throw new HttpException(`No image found!`, HttpStatus.NOT_FOUND);
+    }
+
+    try {
+      if (image) {
+        fs.unlinkSync(
+          path.join(
+            storageDir(),
+            'mushroom-photos',
+            image[imageNumber - 1].imageName,
+          ),
+        );
+      }
+    } catch (e) {
+      throw new HttpException(`No image found!`, HttpStatus.NOT_FOUND);
+    }
+
+    await Image.delete(image[imageNumber - 1].id);
   }
 }

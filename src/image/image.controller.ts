@@ -20,18 +20,18 @@ import { MulterDiskUploadedFiles } from '../interfaces/files';
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
-  @Get('/:id/:imageNumber')
-  async getImage(
-    @Param('id') id: string,
-    @Param('imageNumber') imageNumber: number,
-    @Res() res: any,
-  ): Promise<any> {
-    return this.imageService.getImage(id, imageNumber - 1, res);
-  }
-
   @Get('/count/:id')
   async getImagesCount(@Param('id') id: string, @Res() res: any): Promise<any> {
     return this.imageService.getImagesCount(id, res);
+  }
+
+  @Get('/:mushroomId/:imageNumber')
+  async getImage(
+    @Param('mushroomId') mushroomId: string,
+    @Param('imageNumber') imageNumber: number,
+    @Res() res: any,
+  ): Promise<any> {
+    return this.imageService.getImage(mushroomId, imageNumber - 1, res);
   }
 
   @Post('/')
@@ -68,8 +68,11 @@ export class ImageController {
   //   return this.imageService.update(+id, updateImage);
   // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.imageService.remove(+id);
+  @Delete('/:mushroomId/:imageNumber')
+  remove(
+    @Param('mushroomId') mushroomId: string,
+    @Param('imageNumber') imageNumber: number,
+  ) {
+    return this.imageService.remove(mushroomId, imageNumber);
   }
 }
