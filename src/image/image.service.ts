@@ -1,13 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { MulterDiskUploadedFiles } from 'src/interceptors/files';
+import { storageDir } from 'src/utils/storage';
 import { Image } from './entities/image.entity';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class ImageService {
-  async create(image): Promise<Image> {
-    const newImage = new Image();
+  async create(image, files: MulterDiskUploadedFiles): Promise<Image> {
+    const photo = files?.photo?.[0] ?? null;
 
-    newImage.mushroomId = image.mushroomId;
-    return await newImage.save();
+    try {
+      const newImage = new Image();
+
+      newImage.mushroomId = image.mushroomId;
+
+      if (photo) {
+        newImage.imageName = photo.filename;
+      }
+
+      return await newImage.save();
+    } catch (e) {
+      try {
+        if (photo) {
+          fs.unlinkSync(
+            path.join(storageDir(), 'mushroom-photos', photo.filename),
+          );
+        }
+      } catch (e2) {}
+
+      throw e;
+    }
   }
 
   async findAll() {

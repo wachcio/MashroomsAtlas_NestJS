@@ -33,6 +33,7 @@
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
     "cookie-parser": "^1.4.5",
+    "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "nestjs-console": "^4.0.0",
     "passport": "^0.4.1",

@@ -10,5 +10,11 @@ export class Image extends BaseEntity implements ImageDto {
     type: 'varchar',
     length: 255,
   })
+  imageName: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   mushroomId: string;
 }

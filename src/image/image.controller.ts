@@ -6,25 +6,44 @@ import {
   Put,
   Param,
   Delete,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ImageService } from './image.service';
 import { ImageDto } from './dto/image.dto';
-
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import * as path from 'path';
+import { multerStorage, storageDir } from '../utils/storage';
+import { MulterDiskUploadedFiles } from '../interfaces/files';
 @Controller('image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
-  @Post()
-  create(@Body() ImageDto: ImageDto) {
-    return this.imageService.create(ImageDto);
+  @Post('/')
+  @UseInterceptors(
+    FileFieldsInterceptor(
+      [
+        {
+          name: 'photo',
+          maxCount: 1,
+        },
+      ],
+      { storage: multerStorage(path.join(storageDir(), 'mushroom-photos')) },
+    ),
+  )
+  create(
+    @Body() ImageDto: ImageDto,
+    @UploadedFiles() files: MulterDiskUploadedFiles,
+  ) {
+    return this.imageService.create(ImageDto, files);
   }
 
-  @Get()
+  @Get('/mushroom')
   findAll() {
     return this.imageService.findAll();
   }
 
-  @Get(':mushroomId')
+  @Get('/mushroom/:mushroomId')
   findOne(@Param('mushroomId') mushroomId: string) {
     return this.imageService.findOne(mushroomId);
   }
