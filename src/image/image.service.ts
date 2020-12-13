@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MulterDiskUploadedFiles } from 'src/interceptors/files';
-import { storageDir } from 'src/utils/storage';
 import { Image } from './entities/image.entity';
 import * as fs from 'fs';
 import * as path from 'path';
+import { mushroomImagePath } from 'src/utils/imagePath';
 
 @Injectable()
 export class ImageService {
@@ -26,7 +26,7 @@ export class ImageService {
       }
 
       res.sendFile(one[imageNumber].imageName, {
-        root: path.join(storageDir(), 'mushroom-photos'),
+        root: mushroomImagePath,
       });
     } catch (e) {
       res.json({
@@ -51,9 +51,7 @@ export class ImageService {
     } catch (e) {
       try {
         if (photo) {
-          fs.unlinkSync(
-            path.join(storageDir(), 'mushroom-photos', photo.filename),
-          );
+          fs.unlinkSync(path.join(mushroomImagePath, photo.filename));
         }
       } catch (e2) {}
 
@@ -83,11 +81,7 @@ export class ImageService {
     try {
       if (image) {
         fs.unlinkSync(
-          path.join(
-            storageDir(),
-            'mushroom-photos',
-            image[imageNumber - 1].imageName,
-          ),
+          path.join(mushroomImagePath, image[imageNumber - 1].imageName),
         );
       }
     } catch (e) {

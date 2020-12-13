@@ -16,10 +16,11 @@ import { ImageDto } from './dto/image.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import { multerStorage, storageDir } from '../utils/storage';
-import { MulterDiskUploadedFiles } from '../interfaces/files';
+import { MulterDiskUploadedFiles } from '../interceptors/files';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';
 import { UserRoleModeratorsGuard } from 'src/guards/user-role-moderators.guard';
+import { mushroomImagePath } from 'src/utils/imagePath';
 @Controller('image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
@@ -48,7 +49,7 @@ export class ImageController {
           maxCount: 1,
         },
       ],
-      { storage: multerStorage(path.join(storageDir(), 'mushroom-photos')) },
+      { storage: multerStorage(mushroomImagePath) },
     ),
   )
   create(
