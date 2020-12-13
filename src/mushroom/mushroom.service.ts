@@ -16,12 +16,16 @@ export class MushroomService {
       relations: ['description'],
     });
 
-    item.map(async (v) => {
-      const images = await Image.count({ mushroomId: v.id });
+    // item.map(async (v) => {
+    //   v.images = await Image.count({ mushroomId: v.id });
+    //   return await v.save();
+    // });
 
-      v.images = images;
-      await v.save();
-    });
+    for (let i = 0; i < item.length; i++) {
+      const images = await Image.count({ mushroomId: item[i].id });
+      item[i].images = images;
+      await item[i].save();
+    }
 
     return item;
   }
@@ -50,13 +54,19 @@ export class MushroomService {
       relations: ['description'],
     });
 
-    item.map(async (v) => {
-      const images = await Image.count({ mushroomId: v.id });
+    // item.map(async (v) => {
+    //   const images = await Image.count({ mushroomId: v.id });
 
-      v.images = images;
+    //   v.images = images;
 
-      await v.save();
-    });
+    //   await v.save();
+    // });
+
+    for (let i = 0; i < item.length; i++) {
+      const images = await Image.count({ mushroomId: item[i].id });
+      item[i].images = images;
+      await item[i].save();
+    }
 
     return item;
   }
