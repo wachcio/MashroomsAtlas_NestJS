@@ -7,19 +7,27 @@ import * as path from 'path';
 
 @Injectable()
 export class ImageService {
-  async getImage(id: string, res: any) {
+  async getImagesCount(id: string, res: any) {
     try {
-      const one = await Image.findOne({ mushroomId: id });
+      const one = await Image.find({ mushroomId: id });
+      console.log(one.length);
 
-      if (!one) {
-        throw new Error('No object found!');
+      res.send({ count: one.length });
+    } catch (e) {
+      res.json({
+        error: e.message,
+      });
+    }
+  }
+  async getImage(id: string, imageNumber: number, res: any) {
+    try {
+      const one = await Image.find({ mushroomId: id });
+
+      if (!one[imageNumber]) {
+        throw new Error('No image found!');
       }
 
-      if (!one.imageName) {
-        throw new Error('No photo in this entity!');
-      }
-
-      res.sendFile(one.imageName, {
+      res.sendFile(one[imageNumber].imageName, {
         root: path.join(storageDir(), 'mushroom-photos'),
       });
     } catch (e) {

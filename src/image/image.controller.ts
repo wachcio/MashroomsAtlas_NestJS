@@ -20,9 +20,18 @@ import { MulterDiskUploadedFiles } from '../interfaces/files';
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
-  @Get('/:id')
-  async getImage(@Param('id') id: string, @Res() res: any): Promise<any> {
-    return this.imageService.getImage(id, res);
+  @Get('/:id/:imageNumber')
+  async getImage(
+    @Param('id') id: string,
+    @Param('imageNumber') imageNumber: number,
+    @Res() res: any,
+  ): Promise<any> {
+    return this.imageService.getImage(id, imageNumber - 1, res);
+  }
+
+  @Get('/count/:id')
+  async getImagesCount(@Param('id') id: string, @Res() res: any): Promise<any> {
+    return this.imageService.getImagesCount(id, res);
   }
 
   @Post('/')
