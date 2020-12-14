@@ -10,23 +10,23 @@ export class MushroomService {
   //     @Inject(forwardRef(() => MushroomService))
   //     private mushroomService: MushroomService,
   //   ) {}
+  async updateImages(item): Promise<MushroomItem[]> {
+    console.log(item);
+
+    return await Promise.all(
+      item.map(async (v) => {
+        v.images = await Image.count({ mushroomId: v.id });
+        return await v.save();
+      }),
+    );
+  }
 
   async getAllMushrooms(): Promise<MushroomItem[]> {
     const item = await MushroomItem.find({
       relations: ['description'],
     });
 
-    // item.map(async (v) => {
-    //   v.images = await Image.count({ mushroomId: v.id });
-    //   return await v.save();
-    // });
-
-    for (let i = 0; i < item.length; i++) {
-      item[i].images = await Image.count({ mushroomId: item[i].id });
-      await item[i].save();
-    }
-
-    return item;
+    return this.updateImages(item);
   }
 
   async getShortDataAllMushrooms(): Promise<MushroomItem[]> {
@@ -53,20 +53,7 @@ export class MushroomService {
       relations: ['description'],
     });
 
-    // item.map(async (v) => {
-    //   const images = await Image.count({ mushroomId: v.id });
-
-    //   v.images = images;
-
-    //   await v.save();
-    // });
-
-    for (let i = 0; i < item.length; i++) {
-      item[i].images = await Image.count({ mushroomId: item[i].id });
-      await item[i].save();
-    }
-
-    return item;
+    return this.updateImages(item);
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {
