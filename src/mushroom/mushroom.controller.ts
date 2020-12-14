@@ -39,9 +39,7 @@ export class MushroomController {
 
   @Post('/')
   @UseGuards(AuthGuard('jwt'), UserRoleModeratorsGuard)
-  createMushroom(@Body() newMushroom: MushroomItem, @UserObj() user: User) {
-    console.log(user);
-
+  createMushroom(@Body() newMushroom: MushroomItem) {
     return this.mushroomService.createMushroom(newMushroom);
   }
 

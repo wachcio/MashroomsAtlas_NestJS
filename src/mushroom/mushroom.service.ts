@@ -3,6 +3,9 @@ import { Like } from 'typeorm';
 import { MushroomDescription } from './mushroom-description.entity';
 import { MushroomItem } from './mushroom-item.entity';
 import { Image } from '../image/entities/image.entity';
+import * as path from 'path';
+import * as fs from 'fs';
+import { mushroomImagePath } from 'src/utils/imagePath';
 
 @Injectable()
 export class MushroomService {
@@ -90,6 +93,23 @@ export class MushroomService {
 
     await MushroomItem.delete(id);
     await MushroomDescription.delete({ id: descriptionId.description.id });
+
+    const images = await Image.find({ mushroomId: id });
+    console.log(images);
+
+    try {
+      if (images.length > 0) {
+        await Promise.all(
+          images.map(async (v) => {
+            await Image.delete(v);
+            // await v.save();
+            fs.unlinkSync(path.join(mushroomImagePath, v.imageName));
+          }),
+        );
+      }
+    } catch (e) {
+      throw new HttpException(`No image found!`, HttpStatus.NOT_FOUND);
+    }
   }
 
   async updateMushroom(id, updateMushroom) {
