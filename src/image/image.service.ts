@@ -4,6 +4,7 @@ import { Image } from './entities/image.entity';
 import * as fs from 'fs';
 import * as path from 'path';
 import { mushroomImagePath } from 'src/utils/imagePath';
+import { MushroomItem } from 'src/mushroom/mushroom-item.entity';
 
 @Injectable()
 export class ImageService {
@@ -47,7 +48,16 @@ export class ImageService {
         newImage.imageName = photo.filename;
       }
 
-      return await newImage.save();
+      await newImage.save();
+
+      const imagesCount = await Image.count({ mushroomId: image.mushroomId });
+      console.log(imagesCount);
+
+      const newMushroom = await MushroomItem.findOne({ id: image.mushroomId });
+      newMushroom.images = imagesCount;
+      newMushroom.save();
+
+      return newImage;
     } catch (e) {
       try {
         if (photo) {
@@ -83,11 +93,18 @@ export class ImageService {
         fs.unlinkSync(
           path.join(mushroomImagePath, image[imageNumber - 1].imageName),
         );
+
+        await Image.delete(image[imageNumber - 1].id);
+
+        const imagesCount = await Image.count({ mushroomId: id });
+        console.log(imagesCount);
+
+        const newMushroom = await MushroomItem.findOne(id);
+        newMushroom.images = imagesCount;
+        newMushroom.save();
       }
     } catch (e) {
       throw new HttpException(`No image found!`, HttpStatus.NOT_FOUND);
     }
-
-    await Image.delete(image[imageNumber - 1].id);
   }
 }

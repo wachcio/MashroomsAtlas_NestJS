@@ -10,23 +10,11 @@ export class MushroomService {
   //     @Inject(forwardRef(() => MushroomService))
   //     private mushroomService: MushroomService,
   //   ) {}
-  async updateImages(item): Promise<MushroomItem[]> {
-    console.log(item);
-
-    return await Promise.all(
-      item.map(async (v) => {
-        v.images = await Image.count({ mushroomId: v.id });
-        return await v.save();
-      }),
-    );
-  }
 
   async getAllMushrooms(): Promise<MushroomItem[]> {
-    const item = await MushroomItem.find({
+    return await MushroomItem.find({
       relations: ['description'],
     });
-
-    return this.updateImages(item);
   }
 
   async getShortDataAllMushrooms(): Promise<MushroomItem[]> {
@@ -42,7 +30,7 @@ export class MushroomService {
   }
 
   async findMushrooms(searchText: string): Promise<MushroomItem[]> {
-    const item = await MushroomItem.find({
+    return await MushroomItem.find({
       where: [
         { id: searchText },
         { polishName: Like(`%${searchText}%`) },
@@ -52,8 +40,6 @@ export class MushroomService {
       ],
       relations: ['description'],
     });
-
-    return this.updateImages(item);
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {
