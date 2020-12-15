@@ -73,7 +73,7 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
 
   @Column({
     type: 'int',
-    nullable: true,
+    default: 0,
   })
   images: number;
 }

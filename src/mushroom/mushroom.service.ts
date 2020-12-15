@@ -39,7 +39,7 @@ export class MushroomService {
         { polishName: Like(`%${searchText}%`) },
         { scientificName: Like(`%${searchText}%`) },
         { anotherNames: Like(`%${searchText}%`) },
-        { application: Like(`%${searchText}%`) },
+        { application: searchText },
       ],
       relations: ['description'],
     });

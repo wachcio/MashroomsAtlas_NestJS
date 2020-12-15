@@ -30,6 +30,11 @@ export class MushroomController {
     return this.mushroomService.getAllMushrooms();
   }
 
+  @Get('/shortdata')
+  getShortDataAllMushrooms(): Promise<MushroomItem[]> {
+    return this.mushroomService.getShortDataAllMushrooms();
+  }
+
   @Get('/:searchText')
   findMushrooms(
     @Param('searchText') searchText: string,
@@ -57,10 +62,5 @@ export class MushroomController {
     @Body() updateMushroom: MushroomItem,
   ): Promise<UpdateResult> {
     return this.mushroomService.updateMushroom(id, updateMushroom);
-  }
-
-  @Get('/shortdata')
-  getShortDataAllMushrooms(): Promise<MushroomItem[]> {
-    return this.mushroomService.getShortDataAllMushrooms();
   }
 }
