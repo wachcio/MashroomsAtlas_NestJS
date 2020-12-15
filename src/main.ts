@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   console.log('ENV: ', process.env); // 'local'
@@ -15,7 +16,14 @@ async function bootstrap() {
   //     transform: true,
   //   }),
   // );
-  console.log('NODE_ENV: ', process.env.NODE_ENV); // 'local'
+  const options = new DocumentBuilder()
+    .setTitle('Mushroom atlas')
+    .setDescription('Mushroom atlas API')
+    .setVersion('1.0')
+    .addTag('mushroom')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
 
   app.use(cookieParser());
 
