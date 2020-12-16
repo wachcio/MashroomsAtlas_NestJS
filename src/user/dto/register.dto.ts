@@ -1,3 +1,5 @@
+import { IsEnum, IsString } from 'class-validator';
+
 export enum userRoleEnum {
   'user' = 'user',
   'moderator' = 'moderator',
@@ -5,7 +7,10 @@ export enum userRoleEnum {
 }
 
 export class RegisterDto {
+  @IsString()
   username: string;
+  @IsString()
   pwd: string;
+  @IsEnum(userRoleEnum)
   role: userRoleEnum;
 }

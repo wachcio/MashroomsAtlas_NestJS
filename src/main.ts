@@ -9,14 +9,19 @@ async function bootstrap() {
   // 'local'
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
+  console.log(
+    'config: ',
+    configService.get('VALIDATION_PIPE_DISABLE_ERROR_MESSAGES'),
+  );
   app.useGlobalPipes(
     new ValidationPipe({
-      disableErrorMessages: configService.get(
-        'VALIDATION_PIPE_DISABLE_ERROR_MESSAGES',
-      ),
-      whitelist: false,
-      forbidNonWhitelisted: true,
       transform: true,
+      disableErrorMessages: false,
+      // disableErrorMessages: configService.get(
+      //   'VALIDATION_PIPE_DISABLE_ERROR_MESSAGES',
+      // ),
+      whitelist: true,
+      forbidNonWhitelisted: true,
     }),
   );
 
