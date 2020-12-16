@@ -3,19 +3,24 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  console.log('ENV: ', process.env); // 'local'
+  // 'local'
   const app = await NestFactory.create(AppModule);
+  const configService = app.get<ConfigService>(ConfigService);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      disableErrorMessages: configService.get(
+        'VALIDATION_PIPE_DISABLE_ERROR_MESSAGES',
+      ),
+      whitelist: false,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
   app.setGlobalPrefix('api/v1');
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     disableErrorMessages: true,
-  //     whitelist: true,
-  //     forbidNonWhitelisted: true,
-  //     transform: true,
-  //   }),
-  // );
   const options = new DocumentBuilder()
     .setTitle('Mushroom atlas')
     .setDescription('Mushroom atlas API')

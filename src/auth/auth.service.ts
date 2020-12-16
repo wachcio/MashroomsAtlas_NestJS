@@ -35,6 +35,8 @@ export class AuthService {
   }
 
   async login(req: AuthLoginDto, res: Response): Promise<any> {
+    console.log(req);
+
     try {
       const user = await User.findOne({
         username: req.username,
