@@ -15,13 +15,16 @@ async function bootstrap() {
   );
   app.useGlobalPipes(
     new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
       transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
       disableErrorMessages: false,
       // disableErrorMessages: configService.get(
       //   'VALIDATION_PIPE_DISABLE_ERROR_MESSAGES',
       // ),
-      whitelist: true,
-      forbidNonWhitelisted: true,
     }),
   );
 
