@@ -123,7 +123,8 @@ export class MushroomService {
       updateMushroom.description,
     );
     updateMushroom.description = descriptionId.description.id;
-
+    console.log('id', id);
+    console.log('data', updateMushroom);
     return await MushroomItem.update(id, updateMushroom);
   }
 }
