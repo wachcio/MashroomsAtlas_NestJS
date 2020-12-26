@@ -65,7 +65,7 @@ export class MushroomDto {
   @IsString()
   @IsNotEmpty()
   anotherNames: string; //inne nazwy
-  @IsEnum(MushroomApplication)
+  @IsEnum(MushroomApplication, { each: true })
   @IsNotEmpty()
   application: MushroomApplication; //zastosowanie
   @IsBoolean()
