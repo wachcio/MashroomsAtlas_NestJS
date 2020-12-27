@@ -15,14 +15,21 @@ async function bootstrap() {
   );
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: false,
-      forbidNonWhitelisted: false,
+      whitelist: true,
+      forbidNonWhitelisted: true,
       // forbidUnknownValues: true,
+      skipMissingProperties: true,
       transform: true,
       transformOptions: {
         enableImplicitConversion: true,
       },
       disableErrorMessages: false,
+      validationError: {
+        /**
+         * WARNING: Avoid exposing the values in the error output (could leak sensitive information)
+         */
+        value: false,
+      },
       // disableErrorMessages: configService.get(
       //   'VALIDATION_PIPE_DISABLE_ERROR_MESSAGES',
       // ),

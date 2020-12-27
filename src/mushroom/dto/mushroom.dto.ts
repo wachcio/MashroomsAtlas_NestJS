@@ -1,10 +1,15 @@
+import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
+  IsInstance,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
+  MaxLength,
   Min,
+  MinLength,
   ValidateNested,
 } from 'class-validator';
 
@@ -65,7 +70,7 @@ export class MushroomDto {
   @IsString()
   @IsNotEmpty()
   anotherNames: string; //inne nazwy
-  @IsEnum(MushroomApplication, { each: true })
+  @IsEnum(MushroomApplication)
   @IsNotEmpty()
   application: MushroomApplication; //zastosowanie
   @IsBoolean()
@@ -74,9 +79,11 @@ export class MushroomDto {
   @IsBoolean()
   @IsNotEmpty()
   approvedForTrade: boolean; //dopuszczony do handlu
-  @ValidateNested({ each: true })
+  @ValidateNested()
+  @Type(() => MushroomDescriptionDto)
   @IsNotEmpty()
   description: MushroomDescriptionDto; //ID opisu
+  @IsOptional()
   @IsNumber()
   @Min(0)
   images: number;
