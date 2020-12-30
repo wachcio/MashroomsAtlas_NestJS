@@ -1,4 +1,4 @@
-import { IsDataURI, IsMimeType, IsString, IsUUID } from 'class-validator';
+import { IsMimeType, IsUUID } from 'class-validator';
 
 export class ImageDto {
   @IsMimeType()

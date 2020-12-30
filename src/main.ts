@@ -20,9 +20,9 @@ async function bootstrap() {
       // forbidUnknownValues: true,
       skipMissingProperties: true,
       transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
+      // transformOptions: {
+      //   enableImplicitConversion: true,
+      // },
       disableErrorMessages: false,
       validationError: {
         /**

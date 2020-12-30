@@ -6,9 +6,12 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  MaxLength,
   Min,
+  MinLength,
   ValidateNested,
 } from 'class-validator';
+import { messageMax, messageMin } from '../../utils/validation-message';
 
 export enum MushroomApplication {
   edible = 'edible', //jadalny
@@ -21,68 +24,164 @@ export enum MushroomApplication {
 export class MushroomDescriptionDto {
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   occurrence: string; //występowanie
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   dimensions: string; //wymiary
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   cap: string; //kapelusz
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   underCap: string; //pod kapeluszem
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   capImprint: string; //odcisk kapelusza
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   stem: string; //trzon
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   flesh: string; //miąższ
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   characteristics: string; //cechy charakterystyczne
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   possibleConfusion: string; //możliwe pomyłki
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   value: string; //wartość (walory smakowe)
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   comments: string; //uwagi
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(1000, {
+    message: messageMax('$property', '$constraint1'),
+  })
   frequency: string; //częstotliwość występowania
 }
 
 export class MushroomDto {
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(255, {
+    message: messageMax('$property', '$constraint1'),
+  })
   polishName: string; //nazwa polska
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(255, {
+    message: messageMax('$property', '$constraint1'),
+  })
   scientificName: string; //nazwa naukowa
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(255, {
+    message: messageMax('$property', '$constraint1'),
+  })
   anotherNames: string; //inne nazwy
 
   @IsEnum(MushroomApplication)
   @IsNotEmpty()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(36, {
+    message: messageMax('$property', '$constraint1'),
+  })
   application: MushroomApplication; //zastosowanie
 
   @IsBoolean()

@@ -34,7 +34,7 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
 
   @Column({
     type: 'varchar',
-    length: 1000,
+    length: 255,
   })
   anotherNames: string;
 
