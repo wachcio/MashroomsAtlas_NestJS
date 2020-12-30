@@ -46,38 +46,47 @@ export class MushroomService {
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {
-    const newMushroom = new MushroomItem();
-    const newMushroomDescription = new MushroomDescription();
+    try {
+      const newMushroom = new MushroomItem();
+      const newMushroomDescription = new MushroomDescription();
 
-    newMushroomDescription.occurrence = mushroom.description.occurrence;
-    newMushroomDescription.dimensions = mushroom.description.dimensions;
-    newMushroomDescription.cap = mushroom.description.cap;
-    newMushroomDescription.underCap = mushroom.description.underCap;
-    newMushroomDescription.capImprint = mushroom.description.capImprint;
-    newMushroomDescription.stem = mushroom.description.stem;
-    newMushroomDescription.flesh = mushroom.description.flesh;
-    newMushroomDescription.characteristics =
-      mushroom.description.characteristics;
-    newMushroomDescription.possibleConfusion =
-      mushroom.description.possibleConfusion;
-    newMushroomDescription.comments = mushroom.description.comments;
-    newMushroomDescription.value = mushroom.description.value;
-    newMushroomDescription.frequency = mushroom.description.frequency;
+      newMushroomDescription.occurrence = mushroom.description.occurrence;
+      newMushroomDescription.dimensions = mushroom.description.dimensions;
+      newMushroomDescription.cap = mushroom.description.cap;
+      newMushroomDescription.underCap = mushroom.description.underCap;
+      newMushroomDescription.capImprint = mushroom.description.capImprint;
+      newMushroomDescription.stem = mushroom.description.stem;
+      newMushroomDescription.flesh = mushroom.description.flesh;
+      newMushroomDescription.characteristics =
+        mushroom.description.characteristics;
+      newMushroomDescription.possibleConfusion =
+        mushroom.description.possibleConfusion;
+      newMushroomDescription.comments = mushroom.description.comments;
+      newMushroomDescription.value = mushroom.description.value;
+      newMushroomDescription.frequency = mushroom.description.frequency;
 
-    await newMushroomDescription.save();
+      await newMushroomDescription.save();
 
-    newMushroom.polishName = mushroom.polishName;
-    newMushroom.scientificName = mushroom.scientificName;
-    newMushroom.anotherNames = mushroom.anotherNames;
-    newMushroom.application = mushroom.application;
-    newMushroom.isLegallyProtected = mushroom.isLegallyProtected;
-    newMushroom.approvedForTrade = mushroom.approvedForTrade;
+      newMushroom.polishName = mushroom.polishName;
+      newMushroom.scientificName = mushroom.scientificName;
+      newMushroom.anotherNames = mushroom.anotherNames;
+      newMushroom.application = mushroom.application;
+      newMushroom.isLegallyProtected = mushroom.isLegallyProtected;
+      newMushroom.approvedForTrade = mushroom.approvedForTrade;
 
-    await newMushroom.save();
+      await newMushroom.save();
 
-    newMushroom.description = newMushroomDescription;
-    await newMushroom.save();
-    return newMushroom;
+      newMushroom.description = newMushroomDescription;
+      await newMushroom.save();
+      return newMushroom;
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        throw new HttpException(
+          `Polish or scientific name is already exist.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
   }
 
   async deleteMushroom(id) {
@@ -89,7 +98,7 @@ export class MushroomService {
     if (!descriptionId) {
       throw new HttpException(
         `I can not find mushroom id ${id}`,
-        HttpStatus.NOT_FOUND,
+        HttpStatus.BAD_REQUEST,
       );
     }
 
@@ -110,23 +119,30 @@ export class MushroomService {
         );
       }
     } catch (e) {
-      throw new HttpException(`No image found!`, HttpStatus.NOT_FOUND);
+      throw new HttpException(`No image found!`, HttpStatus.BAD_REQUEST);
     }
   }
 
   async updateMushroom(id, updateMushroom) {
-    const descriptionId = await MushroomItem.findOne({
-      where: [{ id }],
-      relations: ['description'],
-    });
+    try {
+      const descriptionId = await MushroomItem.findOne({
+        where: [{ id }],
+        relations: ['description'],
+      });
 
-    await MushroomDescription.update(
-      descriptionId.description.id,
-      updateMushroom.description,
-    );
-    updateMushroom.description = descriptionId.description.id;
-    console.log('id', id);
-    console.log('data', updateMushroom);
-    return await MushroomItem.update(id, updateMushroom);
+      await MushroomDescription.update(
+        descriptionId.description.id,
+        updateMushroom.description,
+      );
+      updateMushroom.description = descriptionId.description.id;
+      return await MushroomItem.update(id, updateMushroom);
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        throw new HttpException(
+          `Polish or scientific name is already exist.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
   }
 }

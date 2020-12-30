@@ -16,13 +16,22 @@ export class UserService {
   }
 
   async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
-    const user = new User();
-    user.username = newUser.username;
-    user.pwdHash = hashPwd(newUser.pwd);
-    user.role = newUser.role;
-    await user.save();
+    try {
+      const user = new User();
+      user.username = newUser.username;
+      user.pwdHash = hashPwd(newUser.pwd);
+      user.role = newUser.role;
+      await user.save();
 
-    return this.filter(user);
+      return this.filter(user);
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        throw new HttpException(
+          `User '${newUser.username}' is already exist.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
   }
 
   async getAllUsers(): Promise<User[]> {
@@ -47,11 +56,20 @@ export class UserService {
     return User.delete(id);
   }
   async updateUser(id: string, updateUser: RegisterDto) {
-    const user = new User();
-    user.username = updateUser.username;
-    user.pwdHash = hashPwd(updateUser.pwd);
-    user.role = updateUser.role;
-    return await User.update(id, user);
+    try {
+      const user = new User();
+      user.username = updateUser.username;
+      user.pwdHash = hashPwd(updateUser.pwd);
+      user.role = updateUser.role;
+      return await User.update(id, user);
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        throw new HttpException(
+          `User '${updateUser.username}' is already exist.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
   }
   @Command({
     command: 'list',
