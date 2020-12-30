@@ -44,7 +44,7 @@ export class MushroomController {
 
   @Post('/')
   @UseGuards(AuthGuard('jwt'), UserRoleModeratorsGuard)
-  createMushroom(@Body() newMushroom: MushroomItem) {
+  createMushroom(@Body() newMushroom: MushroomDto) {
     return this.mushroomService.createMushroom(newMushroom);
   }
 
@@ -59,7 +59,7 @@ export class MushroomController {
   @UseGuards(AuthGuard('jwt'), UserRoleModeratorsGuard)
   update(
     @Param('id') id: string,
-    @Body() updateMushroom: MushroomItem,
+    @Body() updateMushroom: MushroomDto,
   ): Promise<UpdateResult> {
     return this.mushroomService.updateMushroom(id, updateMushroom);
   }

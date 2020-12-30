@@ -2,14 +2,11 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
-  IsInstance,
+  IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
-  MaxLength,
   Min,
-  MinLength,
   ValidateNested,
 } from 'class-validator';
 
@@ -25,36 +22,47 @@ export class MushroomDescriptionDto {
   @IsString()
   @IsNotEmpty()
   occurrence: string; //występowanie
+
   @IsString()
   @IsNotEmpty()
   dimensions: string; //wymiary
+
   @IsString()
   @IsNotEmpty()
   cap: string; //kapelusz
+
   @IsString()
   @IsNotEmpty()
   underCap: string; //pod kapeluszem
+
   @IsString()
   @IsNotEmpty()
   capImprint: string; //odcisk kapelusza
+
   @IsString()
   @IsNotEmpty()
   stem: string; //trzon
+
   @IsString()
   @IsNotEmpty()
   flesh: string; //miąższ
+
   @IsString()
   @IsNotEmpty()
   characteristics: string; //cechy charakterystyczne
+
   @IsString()
   @IsNotEmpty()
   possibleConfusion: string; //możliwe pomyłki
+
   @IsString()
   @IsNotEmpty()
   value: string; //wartość (walory smakowe)
+
   @IsString()
   @IsNotEmpty()
   comments: string; //uwagi
+
   @IsString()
   @IsNotEmpty()
   frequency: string; //częstotliwość występowania
@@ -64,27 +72,34 @@ export class MushroomDto {
   @IsString()
   @IsNotEmpty()
   polishName: string; //nazwa polska
+
   @IsString()
   @IsNotEmpty()
   scientificName: string; //nazwa naukowa
+
   @IsString()
   @IsNotEmpty()
   anotherNames: string; //inne nazwy
+
   @IsEnum(MushroomApplication)
   @IsNotEmpty()
   application: MushroomApplication; //zastosowanie
+
   @IsBoolean()
   @IsNotEmpty()
   isLegallyProtected: boolean; //chroniony prawnie
+
   @IsBoolean()
   @IsNotEmpty()
   approvedForTrade: boolean; //dopuszczony do handlu
+
   @ValidateNested()
   @Type(() => MushroomDescriptionDto)
   @IsNotEmpty()
   description: MushroomDescriptionDto; //ID opisu
+
   @IsOptional()
-  @IsNumber()
+  @IsInt()
   @Min(0)
   images: number;
 }
