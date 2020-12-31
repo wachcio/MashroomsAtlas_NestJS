@@ -52,7 +52,7 @@ export class AuthService {
       return res
         .cookie('jwt', token.accessToken, {
           secure: false,
-          domain: 'localhost',
+          domain: process.env.JWT_DOMAIN,
           httpOnly: true,
         })
         .json({ ok: true });
@@ -67,7 +67,7 @@ export class AuthService {
       await user.save();
       res.clearCookie('jwt', {
         secure: false,
-        domain: 'localhost',
+        domain: process.env.JWT_DOMAIN,
         httpOnly: true,
       });
       return res.json({ ok: true });
