@@ -46,6 +46,12 @@ export class MushroomService {
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {
+    if (Object.keys(mushroom).length === 0) {
+      throw new HttpException(
+        `You must send mushroom data.`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     try {
       const newMushroom = new MushroomItem();
       const newMushroomDescription = new MushroomDescription();
