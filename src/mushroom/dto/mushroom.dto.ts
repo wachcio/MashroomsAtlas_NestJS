@@ -21,6 +21,14 @@ export enum MushroomApplication {
   conditionallyEdible = 'conditionallyEdible', //warunkowo jadalny
 }
 
+function convertMushroomEnumToString() {
+  let result = '';
+
+  Object.keys(MushroomApplication).filter((key) => (result += key + ', '));
+  result = result.slice(0, -2);
+  return result;
+}
+
 export class MushroomDescriptionDto {
   @IsString()
   @IsNotEmpty()
@@ -174,7 +182,9 @@ export class MushroomDto {
   })
   anotherNames: string; //inne nazwy
 
-  @IsEnum(MushroomApplication)
+  @IsEnum(MushroomApplication, {
+    message: `application must be a valid enum value (${convertMushroomEnumToString()})`,
+  })
   @IsNotEmpty()
   @MinLength(4, {
     message: messageMin('$property', '$constraint1'),
