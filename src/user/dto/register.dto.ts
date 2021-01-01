@@ -13,6 +13,13 @@ export enum userRoleEnum {
   'moderator' = 'moderator',
   'admin' = 'admin',
 }
+function convertUserRoleEnumToString() {
+  let result = '';
+
+  Object.keys(userRoleEnum).filter((key) => (result += key + ', '));
+  result = result.slice(0, -2);
+  return result;
+}
 
 export class RegisterDto {
   @IsString()
@@ -35,6 +42,8 @@ export class RegisterDto {
   pwd: string;
   @IsNotEmpty()
   @IsOptional()
-  @IsEnum(userRoleEnum)
+  @IsEnum(userRoleEnum, {
+    message: `application must be a valid enum value (${convertUserRoleEnumToString()})`,
+  })
   role: userRoleEnum;
 }
