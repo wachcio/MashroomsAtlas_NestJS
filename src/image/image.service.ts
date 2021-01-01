@@ -37,6 +37,23 @@ export class ImageService {
   }
 
   async create(image, files: MulterDiskUploadedFiles): Promise<Image> {
+    if (!image.mushroomId) {
+      throw new HttpException(`No mushroom id`, HttpStatus.BAD_REQUEST);
+    }
+
+    if (
+      (await (await MushroomItem.find({ id: image.mushroomId })).length) == 0
+    ) {
+      throw new HttpException(
+        `No mushroom id '${image.mushroomId}'`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (!files.photo) {
+      throw new HttpException(`No data photo`, HttpStatus.BAD_REQUEST);
+    }
+
     const photo = files?.photo?.[0] ?? null;
 
     try {
