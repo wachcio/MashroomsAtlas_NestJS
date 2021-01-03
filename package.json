@@ -25,8 +25,9 @@
     "build:console:dev": "nest build",
     "postbuild:console:dev": "cp .env.development ./dist",
     "console:dev": "npm run build:console:dev && npm run console",
+    "console_dev_build": "npm run build:console:dev &&cross-env NODE_ENV=development  node dist/console.js",
     "console_dev": "cross-env NODE_ENV=development  node dist/console.js",
-    "console": "cross-env NODE_ENV=production node dist/console.js"
+    "console": "node dist/console.js"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.4",

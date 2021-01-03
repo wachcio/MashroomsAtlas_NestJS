@@ -82,7 +82,7 @@ export class UserService {
   }
 
   @Command({
-    command: 'add <username> <pwd>',
+    command: 'add <username> <pwd> <role>',
     description: 'Add new user',
   })
   async addUsersCmd(username: string, pwd: string, role: userRoleEnum) {
