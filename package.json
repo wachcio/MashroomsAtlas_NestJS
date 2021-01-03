@@ -8,7 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "postbuild": "cp .env.production ./dist && mv ./dist/main.js ./dist/app.js",
+    "postbuild": "cp package.json ./dist && cp .env.production ./dist && mv ./dist/main.js ./dist/app.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start ",
     "prestart:dev": "rimraf dist",
@@ -27,7 +27,7 @@
     "console:dev": "npm run build:console:dev && npm run console",
     "console_dev_build": "npm run build:console:dev &&cross-env NODE_ENV=development  node dist/console.js",
     "console_dev": "cross-env NODE_ENV=development  node dist/console.js",
-    "console": "node dist/console.js"
+    "console": "node console.js"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.4",
