@@ -16,6 +16,8 @@ export class UserService {
   }
 
   async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
+    console.log(newUser);
+
     try {
       const user = new User();
       user.username = newUser.username;

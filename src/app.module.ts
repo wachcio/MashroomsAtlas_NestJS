@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 
 import { AuthModule } from './auth/auth.module';
 import { ImageModule } from './image/image.module';
+import { ConsoleModule } from 'nestjs-console';
 
 @Module({
   imports: [
@@ -35,10 +36,9 @@ import { ImageModule } from './image/image.module';
     }),
     MushroomModule,
     UserModule,
-
     AuthModule,
-
     ImageModule,
+    ConsoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
