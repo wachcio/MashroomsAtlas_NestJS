@@ -92,4 +92,25 @@ export class UserService {
       }),
     );
   }
+
+  @Command({
+    command: 'delete <id>',
+    description: 'Delete user',
+  })
+  async deleteUserCmd(id: string) {
+    console.log(await this.deleteUser(id));
+  }
+
+  @Command({
+    command: 'update <id> <username> <pwd> <role>',
+    description: 'Update user',
+  })
+  async updateUserCmd(
+    id: string,
+    username: string,
+    pwd: string,
+    role: userRoleEnum,
+  ) {
+    console.log(await this.updateUser(id, { username, pwd, role }));
+  }
 }
