@@ -203,6 +203,14 @@ export class MushroomService {
     }
   }
 
+  @Command({
+    command: 'delete <id>',
+    description: 'Delete mushroom',
+  })
+  async deleteMushroomsCmd(id) {
+    console.log(await this.deleteMushroom(id));
+  }
+
   async updateMushroom(id, updateMushroom) {
     try {
       const descriptionId = await MushroomItem.findOne({
