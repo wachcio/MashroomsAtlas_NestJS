@@ -57,7 +57,18 @@ export class MushroomService {
     });
   }
 
+  @Command({
+    command: 'find <searchText>',
+    description:
+      'Find mushroom (id, polish name, scientific name, another names, application)',
+  })
+  async findMushroomsCmd(searchText) {
+    console.log(await this.findMushrooms(searchText));
+  }
+
   async createMushroom(mushroom): Promise<MushroomItem> {
+    console.log(mushroom);
+
     if (Object.keys(mushroom).length === 0) {
       throw new HttpException(
         `You must send mushroom data.`,
@@ -105,6 +116,57 @@ export class MushroomService {
         );
       }
     }
+  }
+
+  @Command({
+    command:
+      'add <polishName> <scientificName> <anotherNames> <application> <isLegallyProtected> <approvedForTrade> <occurrence> <dimensions> <cap> <underCap> <capImprint> <stem> <flesh> <characteristics> <possibleConfusion> <value> <comments> <frequency>',
+    description: 'Add mushroom',
+  })
+  async addMushroomCmd(
+    polishName,
+    scientificName,
+    anotherNames,
+    application,
+    isLegallyProtected,
+    approvedForTrade,
+    occurrence,
+    dimensions,
+    cap,
+    underCap,
+    capImprint,
+    stem,
+    flesh,
+    characteristics,
+    possibleConfusion,
+    value,
+    comments,
+    frequency,
+  ) {
+    console.log(
+      await this.createMushroom({
+        polishName,
+        scientificName,
+        anotherNames,
+        application,
+        isLegallyProtected: Boolean(isLegallyProtected),
+        approvedForTrade: Boolean(approvedForTrade),
+        description: {
+          occurrence,
+          dimensions,
+          cap,
+          underCap,
+          capImprint,
+          stem,
+          flesh,
+          characteristics,
+          possibleConfusion,
+          value,
+          comments,
+          frequency,
+        },
+      }),
+    );
   }
 
   async deleteMushroom(id) {
