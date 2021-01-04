@@ -6,8 +6,12 @@ import { Image } from '../image/entities/image.entity';
 import * as path from 'path';
 import * as fs from 'fs';
 import { mushroomImagePath } from 'src/utils/imagePath';
+import { Command, Console } from 'nestjs-console';
 
 @Injectable()
+@Console({
+  name: 'mushrooms',
+})
 export class MushroomService {
   //   constructor(
   //     @Inject(forwardRef(() => MushroomService))
@@ -18,6 +22,14 @@ export class MushroomService {
     return await MushroomItem.find({
       relations: ['description'],
     });
+  }
+
+  @Command({
+    command: 'list',
+    description: 'List all of mushrooms',
+  })
+  async listMushroomsCmd() {
+    console.log(await this.getAllMushrooms());
   }
 
   async getShortDataAllMushrooms(): Promise<MushroomItem[]> {
