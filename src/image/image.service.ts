@@ -153,4 +153,12 @@ export class ImageService {
       throw new HttpException(`No image found!`, HttpStatus.NOT_FOUND);
     }
   }
+
+  @Command({
+    command: 'remove <mushroomId> <imageNumber>',
+    description: 'Remove image',
+  })
+  async removeImageCmd(mushroomId, imageNumber) {
+    console.log(await this.remove(mushroomId, Number(imageNumber)));
+  }
 }
