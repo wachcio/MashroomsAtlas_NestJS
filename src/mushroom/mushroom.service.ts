@@ -233,4 +233,56 @@ export class MushroomService {
       }
     }
   }
+
+  @Command({
+    command:
+      'update <id> <polishName> <scientificName> <anotherNames> <application> <isLegallyProtected> <approvedForTrade> <occurrence> <dimensions> <cap> <underCap> <capImprint> <stem> <flesh> <characteristics> <possibleConfusion> <value> <comments> <frequency>',
+    description: 'Add mushroom',
+  })
+  async updateMushroomCmd(
+    id,
+    polishName,
+    scientificName,
+    anotherNames,
+    application,
+    isLegallyProtected,
+    approvedForTrade,
+    occurrence,
+    dimensions,
+    cap,
+    underCap,
+    capImprint,
+    stem,
+    flesh,
+    characteristics,
+    possibleConfusion,
+    value,
+    comments,
+    frequency,
+  ) {
+    console.log(
+      await this.updateMushroom(id, {
+        polishName,
+        scientificName,
+        anotherNames,
+        application,
+        isLegallyProtected: Boolean(isLegallyProtected),
+        approvedForTrade: Boolean(approvedForTrade),
+        description: {
+          occurrence,
+          dimensions,
+          cap,
+          underCap,
+          capImprint,
+          stem,
+          flesh,
+          characteristics,
+          possibleConfusion,
+          value,
+          comments,
+          frequency,
+        },
+      }),
+    );
+  }
 }
