@@ -28,7 +28,23 @@ import { ConsoleModule } from 'nestjs-console';
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
       entities: [process.env.TYPEORM_ENTITIES],
-      logging: Boolean(process.env.TYPEORM_LOGGING),
+      logging: process.env.TYPEORM_LOGGING as
+        | boolean
+        | 'all'
+        | (
+            | 'query'
+            | 'schema'
+            | 'error'
+            | 'warn'
+            | 'info'
+            | 'log'
+            | 'migration'
+          )[],
+      logger: process.env.TYPEORM_LOGGER as
+        | 'debug'
+        | 'advanced-console'
+        | 'simple-console'
+        | 'file',
       synchronize: Boolean(process.env.TYPEORM_SYNCHRONIZE),
       bigNumberStrings: Boolean(process.env.TYPEORM_BIG_NUMBER_STRING),
       // dropSchema: Boolean(process.env.TYPEORM_DROP_SCHEMA),
