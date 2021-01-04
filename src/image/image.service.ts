@@ -103,8 +103,24 @@ export class ImageService {
     return await Image.find();
   }
 
+  @Command({
+    command: 'findAll',
+    description: 'Find all images',
+  })
+  async findAllImagesCmd() {
+    console.log(await this.findAll());
+  }
+
   async findOne(mushroomId: string) {
     return Image.find({ mushroomId });
+  }
+
+  @Command({
+    command: 'find <mushroomId>',
+    description: 'Find images',
+  })
+  async findImagesCmd(mushroomId) {
+    console.log(await this.findOne(mushroomId));
   }
 
   // async update(id: number, Image: Image) {
