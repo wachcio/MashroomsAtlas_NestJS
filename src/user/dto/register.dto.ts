@@ -3,6 +3,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -39,11 +40,15 @@ export class RegisterDto {
   @MaxLength(255, {
     message: messageMax('$property', '$constraint1'),
   })
+  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,20}$/, {
+    message:
+      'A password at least contains one numeric digit, one supercase char and one lowercase char',
+  })
   pwd: string;
   @IsNotEmpty()
   @IsOptional()
   @IsEnum(userRoleEnum, {
-    message: `application must be a valid enum value (${convertUserRoleEnumToString()})`,
+    message: `role must be a valid enum value (${convertUserRoleEnumToString()})`,
   })
   role: userRoleEnum;
 }
