@@ -6,6 +6,7 @@ import { hashPwd } from '../utils/hash-pwd';
 import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { JwtPayload } from './jwt.strategy';
+import { ok } from 'assert';
 
 @Injectable()
 export class AuthService {
@@ -55,7 +56,7 @@ export class AuthService {
           domain: process.env.JWT_DOMAIN,
           httpOnly: true,
         })
-        .json({ ok: true });
+        .json({ ok: true, username: user.username, role: user.role });
     } catch (e) {
       return res.json({ error: e.message });
     }
