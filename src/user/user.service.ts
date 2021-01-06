@@ -4,8 +4,6 @@ import { RegisterUserResponse } from '../interfaces/user';
 import { User } from './user.entity';
 import { hashPwd } from '../utils/hash-pwd';
 import { Command, Console } from 'nestjs-console';
-import { AuthLoginDto } from 'src/auth/dto/auth-login.dto';
-import { JwtStrategy } from 'src/auth/jwt.strategy';
 
 @Injectable()
 @Console({
@@ -75,25 +73,28 @@ export class UserService {
   }
 
   async changePassword(user: User, pwd) {
-    if (hashPwd(pwd.oldPassword) != user.pwdHash) {
+    if (hashPwd(pwd.oldPwd) != user.pwdHash) {
       throw new HttpException(
         `Old password is not valid.`,
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    if (pwd.oldPassword == pwd.newPassword) {
+    if (pwd.oldPwd == pwd.newPwd) {
       throw new HttpException(
         `Old and new password is same.`,
         HttpStatus.BAD_REQUEST,
       );
     }
-
-    user.pwdHash = hashPwd(pwd.newPassword);
-    await user.save();
-    return {
-      ok: true,
-    };
+    try {
+      user.pwdHash = hashPwd(pwd.newPwd);
+      await user.save();
+      return {
+        ok: true,
+      };
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Command({
@@ -137,5 +138,21 @@ export class UserService {
     role: userRoleEnum,
   ) {
     console.log(await this.updateUser(id, { username, pwd, role }));
+  }
+
+  @Command({
+    command: 'changePassword <userId> <oldPwd> <newPwd>',
+    description: 'Change user passowrd',
+  })
+  async changePasswordCmd(id: string, oldPwd: string, newPwd: string) {
+    const user = await User.findOne(id);
+    if (!user) {
+      throw new HttpException(
+        `User ID ${id} not exist.`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    console.log(await this.changePassword(user, { oldPwd, newPwd }));
   }
 }
