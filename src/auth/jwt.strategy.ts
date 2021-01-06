@@ -7,7 +7,7 @@ export interface JwtPayload {
   id: string;
 }
 
-function cookieExtractor(req: any): null | string {
+export function cookieExtractor(req: any): null | string {
   return req && req.cookies ? req.cookies?.jwt ?? null : null;
 }
 

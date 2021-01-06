@@ -4,6 +4,8 @@ import { RegisterUserResponse } from '../interfaces/user';
 import { User } from './user.entity';
 import { hashPwd } from '../utils/hash-pwd';
 import { Command, Console } from 'nestjs-console';
+import { AuthLoginDto } from 'src/auth/dto/auth-login.dto';
+import { JwtStrategy } from 'src/auth/jwt.strategy';
 
 @Injectable()
 @Console({
@@ -71,6 +73,29 @@ export class UserService {
       }
     }
   }
+
+  async changePassword(user: User, pwd) {
+    if (hashPwd(pwd.oldPassword) != user.pwdHash) {
+      throw new HttpException(
+        `Old password is not valid.`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (pwd.oldPassword == pwd.newPassword) {
+      throw new HttpException(
+        `Old and new password is same.`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    user.pwdHash = hashPwd(pwd.newPassword);
+    await user.save();
+    return {
+      ok: true,
+    };
+  }
+
   @Command({
     command: 'list',
     description: 'List all of the users',

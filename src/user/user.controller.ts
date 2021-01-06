@@ -17,10 +17,18 @@ import { RegisterDto } from './dto/register.dto';
 import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';
 import { User } from './user.entity';
 import { UpdateResult } from 'typeorm';
+import { UserObj } from 'src/decorators/user-obj.decorator';
 
 @Controller('user')
 export class UserController {
   constructor(@Inject(UserService) private userService: UserService) {}
+
+  @Put('/changepassword')
+  // @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
+  @UseGuards(AuthGuard('jwt'))
+  changePasswordUser(@Body() pwd, @UserObj() user: User) {
+    return this.userService.changePassword(user, pwd);
+  }
 
   @Get('/')
   @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
