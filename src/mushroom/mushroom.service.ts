@@ -186,7 +186,7 @@ export class MushroomService {
     await MushroomDescription.delete({ id: descriptionId.description.id });
 
     const images = await Image.find({ mushroomId: id });
-    console.log(images);
+    // console.log(images);
 
     try {
       if (images.length > 0) {
