@@ -12,8 +12,8 @@ import { validateEmail } from 'src/utils/validate-email';
 })
 export class UserService {
   filter(user: User): RegisterUserResponse {
-    const { id, username, email, role } = user;
-    return { id, username, email, role };
+    const { username, email, role } = user;
+    return { username, email, role };
   }
 
   async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
@@ -33,7 +33,7 @@ export class UserService {
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
         throw new HttpException(
-          `User '${newUser.username}' is already exist.`,
+          `User '${newUser.username}' or email '${newUser.email}' is already exist.`,
           HttpStatus.BAD_REQUEST,
         );
       }

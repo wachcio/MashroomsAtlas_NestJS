@@ -4,7 +4,7 @@ export enum userRoleEnum {
   'admin' = 'admin',
 }
 export interface RegisterUserResponse {
-  id: string;
+  // id: string;
   username: string;
   email: string;
   role: userRoleEnum;
