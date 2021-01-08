@@ -6,6 +6,7 @@ import { hashPwd } from '../utils/hash-pwd';
 import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { JwtPayload } from './jwt.strategy';
+import { RegisterUserResponse } from '../interfaces/user';
 
 @Injectable()
 export class AuthService {
@@ -48,14 +49,14 @@ export class AuthService {
       }
 
       const token = await this.createToken(await this.generateToken(user));
-
+      const { username, email, role } = user;
       return res
         .cookie('jwt', token.accessToken, {
           secure: false,
           domain: process.env.JWT_DOMAIN,
           httpOnly: true,
         })
-        .json({ ok: true, username: user.username, role: user.role });
+        .json({ ok: true, username, email, role });
     } catch (e) {
       return res.json({ error: e.message });
     }
