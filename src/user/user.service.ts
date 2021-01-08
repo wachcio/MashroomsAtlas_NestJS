@@ -1,16 +1,19 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { RegisterDto, userRoleEnum } from './dto/register.dto';
 import { RegisterUserResponse } from '../interfaces/user';
 import { User } from './user.entity';
 import { hashPwd } from '../utils/hash-pwd';
 import { Command, Console } from 'nestjs-console';
 import { validateEmail } from 'src/utils/validate-email';
+import { MailModule } from '../mail/mail.module';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 @Console({
   name: 'users',
 })
 export class UserService {
+  constructor(@Inject(MailModule) private mailService: MailService) {}
   filter(user: User): RegisterUserResponse {
     const { username, email, role } = user;
     return { username, email, role };
@@ -29,6 +32,11 @@ export class UserService {
       user.role = newUser.role;
       await user.save();
 
+      await this.mailService.sendMail(
+        user.email,
+        'Rejestracja użytkownika',
+        `Zarejestrowałeś użytkownika ${user.username}`,
+      );
       return this.filter(user);
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
