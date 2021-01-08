@@ -4,6 +4,7 @@ import { RegisterUserResponse } from '../interfaces/user';
 import { User } from './user.entity';
 import { hashPwd } from '../utils/hash-pwd';
 import { Command, Console } from 'nestjs-console';
+import { validateEmail } from 'src/utils/validate-email';
 
 @Injectable()
 @Console({
@@ -11,11 +12,15 @@ import { Command, Console } from 'nestjs-console';
 })
 export class UserService {
   filter(user: User): RegisterUserResponse {
-    const { id, username, role } = user;
-    return { id, username, role };
+    const { id, username, email, role } = user;
+    return { id, username, email, role };
   }
 
   async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
+    if (!newUser.email || !validateEmail(newUser.email)) {
+      throw new HttpException(`Email is not valid`, HttpStatus.BAD_REQUEST);
+    }
+
     try {
       const user = new User();
       user.username = newUser.username;

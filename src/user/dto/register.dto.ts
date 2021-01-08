@@ -4,7 +4,6 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -34,8 +33,13 @@ export class RegisterDto {
   })
   username: string;
   @IsNotEmpty()
-  @IsEmail()
-  @MinLength(4, {
+  @IsEmail(
+    {},
+    {
+      message: `email is not valid`,
+    },
+  )
+  @MinLength(6, {
     message: messageMin('$property', '$constraint1'),
   })
   @MaxLength(255, {
