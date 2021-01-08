@@ -1,4 +1,5 @@
 import {
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -32,6 +33,15 @@ export class RegisterDto {
     message: messageMax('$property', '$constraint1'),
   })
   username: string;
+  @IsNotEmpty()
+  @IsEmail()
+  @MinLength(4, {
+    message: messageMin('$property', '$constraint1'),
+  })
+  @MaxLength(255, {
+    message: messageMax('$property', '$constraint1'),
+  })
+  email: string;
   @IsString()
   @IsNotEmpty()
   @MinLength(8, {

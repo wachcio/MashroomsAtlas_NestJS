@@ -19,6 +19,7 @@ export class UserService {
     try {
       const user = new User();
       user.username = newUser.username;
+      user.email = newUser.email;
       user.pwdHash = hashPwd(newUser.pwd);
       user.role = newUser.role;
       await user.save();
@@ -106,13 +107,19 @@ export class UserService {
   }
 
   @Command({
-    command: 'add <username> <pwd> <role>',
+    command: 'add <username> <email> <pwd> <role>',
     description: 'Add new user',
   })
-  async addUsersCmd(username: string, pwd: string, role: userRoleEnum) {
+  async addUsersCmd(
+    username: string,
+    email: string,
+    pwd: string,
+    role: userRoleEnum,
+  ) {
     console.log(
       await this.register({
         username,
+        email,
         pwd,
         role,
       }),
@@ -128,16 +135,17 @@ export class UserService {
   }
 
   @Command({
-    command: 'update <id> <username> <pwd> <role>',
+    command: 'update <id> <username> <email> <pwd> <role>',
     description: 'Update user',
   })
   async updateUserCmd(
     id: string,
     username: string,
+    email: string,
     pwd: string,
     role: userRoleEnum,
   ) {
-    console.log(await this.updateUser(id, { username, pwd, role }));
+    console.log(await this.updateUser(id, { username, email, pwd, role }));
   }
 
   @Command({

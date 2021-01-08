@@ -12,6 +12,12 @@ export class User extends BaseEntity {
   })
   username: string;
 
+  @Column({
+    length: 255,
+    unique: true,
+  })
+  email: string;
+
   @Column()
   pwdHash: string;
 

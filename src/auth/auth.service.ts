@@ -6,7 +6,6 @@ import { hashPwd } from '../utils/hash-pwd';
 import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { JwtPayload } from './jwt.strategy';
-import { ok } from 'assert';
 
 @Injectable()
 export class AuthService {
