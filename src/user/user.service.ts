@@ -65,13 +65,14 @@ export class UserService {
     try {
       const user = new User();
       user.username = updateUser.username;
+      user.email = updateUser.email;
       user.pwdHash = hashPwd(updateUser.pwd);
       user.role = updateUser.role;
       return await User.update(id, user);
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
         throw new HttpException(
-          `User '${updateUser.username}' is already exist.`,
+          `User '${updateUser.username}' or email '${updateUser.email}' is already exist.`,
           HttpStatus.BAD_REQUEST,
         );
       }
