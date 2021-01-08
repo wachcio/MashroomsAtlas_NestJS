@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ImageModule } from './image/image.module';
 import { ConsoleModule } from 'nestjs-console';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { ConsoleModule } from 'nestjs-console';
     AuthModule,
     ImageModule,
     ConsoleModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
