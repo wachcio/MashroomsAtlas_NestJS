@@ -33,11 +33,8 @@ export class UserService {
 
       await user.save();
 
-      await this.mailService.sendMail(
-        newUser.email,
-        'Rejestracja użytkownika',
-        `Zarejestrowałeś użytkownika ${newUser.username}`,
-      );
+      await this.mailService.sendWelcomeMessage(user);
+      await this.mailService.sendMessageToAdmin(user);
       return this.filter(user);
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
