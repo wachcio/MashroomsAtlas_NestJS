@@ -1,9 +1,11 @@
 import { HandlebarsAdapter } from '@nest-modules/mailer';
 
 export = {
-  transport: process.env.MAILER_TRANSPORT,
+  transport: `smtp://admin123:admin456@localhost:2500`,
+  //   transport: process.env.MAILER_TRANSPORT,
   defaults: {
-    from: process.env.MAILER_FROM,
+    from: 'admin@test.example.com',
+    // from: process.env.MAILER_FROM,
   },
   template: {
     dir: './templates/email',

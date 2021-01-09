@@ -51,6 +51,7 @@ import { MailModule } from './mail/mail.module';
       // dropSchema: Boolean(process.env.TYPEORM_DROP_SCHEMA),
       // cache: Boolean(process.env.TYPEORM_CACHE),
     }),
+
     MushroomModule,
     UserModule,
     AuthModule,

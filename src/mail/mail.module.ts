@@ -1,51 +1,42 @@
 import { Module } from '@nestjs/common';
-import mailerconfig = require('../mailerconfig');
+import { ConfigModule } from '@nestjs/config';
 import { HandlebarsAdapter, MailerModule } from '@nest-modules/mailer';
 import { MailService } from './mail.service';
 
-console.log(process.env);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV == 'development'
+          ? '.env.development'
+          : '.env.production',
+      isGlobal: true,
+    }),
     MailerModule.forRoot({
       transport: {
-        host: 'localhost',
-        port: 2500,
-        ignoreTLS: true,
+        host: process.env.MAILER_HOST,
+        port: Number(process.env.MAILER_PORT),
+        ignoreTLS: Boolean(process.env.MAILER_IGNORE_TLS),
         secure: false,
         auth: {
-          user: '',
-          pass: '',
+          user: process.env.MAILER_AUTH_USER,
+          pass: process.env.MAILER_AUTH_PASS,
         },
       },
       defaults: {
-        from: '"No Reply" <no-reply@localhost>',
+        from: `"${process.env.MAILER_DEFAULTS_FROM_NAME}" <${process.env.MAILER_DEFAULTS_FROM_ADDRESS}>`,
       },
-      //   preview: true,
       template: {
-        dir: process.cwd() + '/template/',
+        dir: path.join(__dirname, process.env.MAILER_DIR),
         adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
         options: {
-          strict: true,
+          strict: Boolean(process.env.MAILER_STRICT),
         },
       },
     }),
-    // MailerModule.forRoot({
-    //   //   transport: process.env.MAILER_TRANSPORT,
-    //   transport: 'smtp://admin:admin@localhost:2500',
-    //   defaults: {
-    //     // from: process.env.MAILER_FROM,
-    //     from: 'admin@test.example.com',
-    //   },
-    //   preview: true,
-    //   template: {
-    //     dir: './templates/email',
-    //     adapter: new HandlebarsAdapter(),
-    //     options: {
-    //       strict: true,
-    //     },
-    //   },
-    // }),
   ],
   providers: [MailService],
   exports: [MailService],

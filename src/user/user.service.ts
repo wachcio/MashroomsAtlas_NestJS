@@ -5,7 +5,6 @@ import { User } from './user.entity';
 import { hashPwd } from '../utils/hash-pwd';
 import { Command, Console } from 'nestjs-console';
 import { validateEmail } from 'src/utils/validate-email';
-import { MailModule } from '../mail/mail.module';
 import { MailService } from '../mail/mail.service';
 
 @Injectable()
@@ -13,7 +12,8 @@ import { MailService } from '../mail/mail.service';
   name: 'users',
 })
 export class UserService {
-  constructor(@Inject(MailModule) private mailService: MailService) {}
+  constructor(@Inject(MailService) public mailService: MailService) {}
+
   filter(user: User): RegisterUserResponse {
     const { username, email, role } = user;
     return { username, email, role };
@@ -30,12 +30,13 @@ export class UserService {
       user.email = newUser.email;
       user.pwdHash = hashPwd(newUser.pwd);
       user.role = newUser.role;
+
       await user.save();
 
       await this.mailService.sendMail(
-        user.email,
+        newUser.email,
         'Rejestracja użytkownika',
-        `Zarejestrowałeś użytkownika ${user.username}`,
+        `Zarejestrowałeś użytkownika ${newUser.username}`,
       );
       return this.filter(user);
     } catch (err) {
@@ -44,6 +45,8 @@ export class UserService {
           `User '${newUser.username}' or email '${newUser.email}' is already exist.`,
           HttpStatus.BAD_REQUEST,
         );
+      } else {
+        return err;
       }
     }
   }
