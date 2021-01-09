@@ -3,24 +3,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MushroomModule } from './mushroom/mushroom.module';
-
-import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
-
 import { AuthModule } from './auth/auth.module';
 import { ImageModule } from './image/image.module';
 import { ConsoleModule } from 'nestjs-console';
 import { MailModule } from './mail/mail.module';
+import { envConfigFilePath } from './utils/env-config-file-path';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath:
-        process.env.NODE_ENV == 'development'
-          ? '.env.development'
-          : '.env.production',
-      isGlobal: true,
-    }),
+    envConfigFilePath(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.TYPEORM_HOST,

@@ -1,20 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { HandlebarsAdapter, MailerModule } from '@nest-modules/mailer';
 import { MailService } from './mail.service';
+import { envConfigFilePath } from 'src/utils/env-config-file-path';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath:
-        process.env.NODE_ENV == 'development'
-          ? '.env.development'
-          : '.env.production',
-      isGlobal: true,
-    }),
+    envConfigFilePath(),
     MailerModule.forRoot({
       transport: {
         host: process.env.MAILER_HOST,
