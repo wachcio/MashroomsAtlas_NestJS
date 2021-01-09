@@ -22,7 +22,7 @@ export class User extends BaseEntity {
   pwdHash: string;
 
   @Column({
-    default: 'moderator',
+    default: 'user',
     type: 'varchar',
     length: 20,
   })

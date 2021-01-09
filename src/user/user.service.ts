@@ -29,7 +29,7 @@ export class UserService {
       user.username = newUser.username;
       user.email = newUser.email;
       user.pwdHash = hashPwd(newUser.pwd);
-      user.role = newUser.role;
+      user.role = userRoleEnum.user;
 
       await user.save();
 

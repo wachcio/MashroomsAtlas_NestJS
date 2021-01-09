@@ -37,7 +37,7 @@ export class UserController {
   }
 
   @Post('/register')
-  @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
+  // @UseGuards(AuthGuard('jwt'), UserRoleAdminGuard)
   register(@Body() newUser: RegisterDto): Promise<RegisterUserResponse> {
     return this.userService.register(newUser);
   }
