@@ -121,7 +121,7 @@ export class MushroomService {
 
   @Command({
     command:
-      'add <polishName> <scientificName> <anotherNames> <application> <isLegallyProtected> <approvedForTrade> <occurrence> <dimensions> <cap> <underCap> <capImprint> <stem> <flesh> <characteristics> <possibleConfusion> <value> <comments> <frequency>',
+      'add <polishName> <scientificName> <anotherNames> <application> <isLegallyProtected> <approvedForTrade> <occurrence> <dimensions> <cap> <underCap> <capImprint> <stem> <flesh> <characteristics> <possibleConfusion> <value> <comments> <frequency> <dataSources>',
     description: 'Add mushroom',
   })
   async addMushroomCmd(
@@ -143,6 +143,7 @@ export class MushroomService {
     value,
     comments,
     frequency,
+    dataSources,
   ) {
     console.log(
       await this.createMushroom({
@@ -166,6 +167,7 @@ export class MushroomService {
           comments,
           frequency,
         },
+        dataSources,
       }),
     );
   }
