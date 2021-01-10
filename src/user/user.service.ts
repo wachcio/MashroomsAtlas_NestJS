@@ -19,7 +19,10 @@ export class UserService {
     return { username, email, role };
   }
 
-  async register(newUser: RegisterDto): Promise<RegisterUserResponse> {
+  async register(
+    newUser: RegisterDto,
+    registerFromCmd?: boolean,
+  ): Promise<RegisterUserResponse> {
     if (!newUser.email || !validateEmail(newUser.email)) {
       throw new HttpException(`Email is not valid`, HttpStatus.BAD_REQUEST);
     }
@@ -29,7 +32,12 @@ export class UserService {
       user.username = newUser.username;
       user.email = newUser.email;
       user.pwdHash = hashPwd(newUser.pwd);
-      user.role = userRoleEnum.user;
+
+      if (registerFromCmd) {
+        user.role = newUser.role;
+      } else {
+        user.role = userRoleEnum.user;
+      }
 
       await user.save();
 
