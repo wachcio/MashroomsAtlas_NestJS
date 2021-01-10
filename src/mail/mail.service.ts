@@ -16,12 +16,13 @@ export class MailService {
 
   async sendWelcomeMessage({ username, email }: User): Promise<any> {
     const subject = `Rejestracja w Atlasie grzybów`;
-    const html = `Witam.<BR>
-    Zarejestrowałeś się w atlasie grzybów jako <b>${username}</b>. Na razie nie możesz edytować danych w nim zawartych. Jeśli chcesz to robić poproś o taką możliwość administrację serwisu.`;
+    // const html = `Witam.<BR>
+    // Zarejestrowałeś się w atlasie grzybów jako <b>${username}</b>. Na razie nie możesz edytować danych w nim zawartych. Jeśli chcesz to robić poproś o taką możliwość administrację serwisu.`;
     await this.mailerService.sendMail({
       to: email,
       subject,
-      html,
+      template: 'welcome',
+      context: { username, email },
     });
   }
 
