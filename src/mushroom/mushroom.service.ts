@@ -215,12 +215,19 @@ export class MushroomService {
   }
 
   async updateMushroom(id, updateMushroom) {
-    try {
-      const descriptionId = await MushroomItem.findOne({
-        where: [{ id }],
-        relations: ['description'],
-      });
+    const descriptionId = await MushroomItem.findOne({
+      where: [{ id }],
+      relations: ['description'],
+    });
+    console.log(descriptionId);
 
+    if (descriptionId == undefined) {
+      throw new HttpException(
+        `Mushroom ${id} not exist.`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    try {
       await MushroomDescription.update(
         descriptionId.description.id,
         updateMushroom.description,
@@ -234,12 +241,13 @@ export class MushroomService {
           HttpStatus.BAD_REQUEST,
         );
       }
+      return err;
     }
   }
 
   @Command({
     command:
-      'update <id> <polishName> <scientificName> <anotherNames> <application> <isLegallyProtected> <approvedForTrade> <occurrence> <dimensions> <cap> <underCap> <capImprint> <stem> <flesh> <characteristics> <possibleConfusion> <value> <comments> <frequency>',
+      'update <id> <polishName> <scientificName> <anotherNames> <application> <isLegallyProtected> <approvedForTrade> <occurrence> <dimensions> <cap> <underCap> <capImprint> <stem> <flesh> <characteristics> <possibleConfusion> <value> <comments> <frequency> <dataSources>',
     description: 'Add mushroom',
   })
   async updateMushroomCmd(
@@ -262,6 +270,7 @@ export class MushroomService {
     value,
     comments,
     frequency,
+    dataSources,
   ) {
     console.log(
       await this.updateMushroom(id, {
@@ -285,6 +294,7 @@ export class MushroomService {
           comments,
           frequency,
         },
+        dataSources,
       }),
     );
   }
