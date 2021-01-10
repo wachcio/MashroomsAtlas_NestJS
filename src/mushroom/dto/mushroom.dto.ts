@@ -1,11 +1,13 @@
 import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsBoolean,
   IsEnum,
   IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUrl,
   MaxLength,
   Min,
   MinLength,
@@ -211,4 +213,16 @@ export class MushroomDto {
   @IsInt()
   @Min(0)
   images: number;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  // @IsUrl({ each: true })
+  // @MinLength(5, {
+  //   message: messageMin('$property', '$constraint1'),
+  // })
+  // @MaxLength(2000, {
+  //   message: messageMax('$property', '$constraint1'),
+  // })
+  dataSources: string[];
 }

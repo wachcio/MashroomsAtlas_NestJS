@@ -102,6 +102,7 @@ export class MushroomService {
       newMushroom.application = mushroom.application;
       newMushroom.isLegallyProtected = mushroom.isLegallyProtected;
       newMushroom.approvedForTrade = mushroom.approvedForTrade;
+      newMushroom.dataSources = mushroom.dataSources;
 
       await newMushroom.save();
 

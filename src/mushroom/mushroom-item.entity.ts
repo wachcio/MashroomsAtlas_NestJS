@@ -1,4 +1,3 @@
-import { type } from 'os';
 import {
   MushroomDto,
   MushroomApplication,
@@ -76,4 +75,7 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
     default: 0,
   })
   images: number;
+
+  @Column('simple-array', { nullable: true })
+  dataSources: string[];
 }
