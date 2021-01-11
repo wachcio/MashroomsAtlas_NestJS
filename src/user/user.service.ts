@@ -139,12 +139,15 @@ export class UserService {
     role: userRoleEnum,
   ) {
     console.log(
-      await this.register({
-        username,
-        email,
-        pwd,
-        role,
-      }),
+      await this.register(
+        {
+          username,
+          email,
+          pwd,
+          role,
+        },
+        true,
+      ),
     );
   }
 

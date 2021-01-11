@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && mkdir ./dist && mkdir ./dist/templates && cp -r ./src/templates ./dist/templates",
     "build": "nest build",
     "postbuild": "cp package.json ./dist && cp .env.production ./dist && mv ./dist/main.js ./dist/app.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
