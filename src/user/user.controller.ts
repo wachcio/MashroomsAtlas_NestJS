@@ -66,6 +66,11 @@ export class UserController {
     return this.userService.updateUser(id, updateUser);
   }
 
+  @Get('/resetPassword/:token')
+  resetPasswordToken(@Param('token') token: string): Promise<any> {
+    return this.userService.resetPasswordToken(token);
+  }
+
   @Post('/resetPassword')
   resetPassword(
     @Body() resetPasswordDto: ResetPasswordRequestDto,

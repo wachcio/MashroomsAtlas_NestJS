@@ -143,6 +143,25 @@ export class UserService {
     // }
   }
 
+  async resetPasswordToken(resetPasswordToken: string): Promise<any> {
+    if (
+      await User.findOne({
+        where: [{ resetPasswordToken }],
+      })
+    ) {
+      return {
+        ok: 'We send new password to your email.',
+      };
+    } else {
+      throw new HttpException(`Link is not valid.`, HttpStatus.BAD_REQUEST);
+    }
+    // try {
+
+    // } catch (err) {
+    //   throw new HttpException(err, HttpStatus.BAD_REQUEST);
+    // }
+  }
+
   @Command({
     command: 'list',
     description: 'List all of the users',
