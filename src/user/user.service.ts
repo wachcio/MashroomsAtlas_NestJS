@@ -6,6 +6,7 @@ import { hashPwd } from '../utils/hash-pwd';
 import { Command, Console } from 'nestjs-console';
 import { validateEmail } from 'src/utils/validate-email';
 import { MailService } from '../mail/mail.service';
+import { ResetPasswordRequestDto } from './dto/resetPasswordRequest.dto';
 
 @Injectable()
 @Console({
@@ -117,6 +118,28 @@ export class UserService {
       };
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async resetPassword(userData: ResetPasswordRequestDto): Promise<any> {
+    console.log(userData);
+
+    try {
+      if (
+        await User.findOne({
+          where: [{ username: userData.username, email: userData.email }],
+        })
+      ) {
+        return {
+          ok: 'Reset link send to your mail.',
+        };
+      } else {
+        return {
+          error: 'Username or mail not exist.',
+        };
+      }
+    } catch (err) {
+      return err;
     }
   }
 

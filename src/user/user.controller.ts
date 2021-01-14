@@ -18,6 +18,8 @@ import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';
 import { User } from './user.entity';
 import { UpdateResult } from 'typeorm';
 import { UserObj } from 'src/decorators/user-obj.decorator';
+import { stringify } from 'querystring';
+import { ResetPasswordRequestDto } from './dto/resetPasswordRequest.dto';
 
 @Controller('user')
 export class UserController {
@@ -62,5 +64,12 @@ export class UserController {
     @Body() updateUser: RegisterDto,
   ): Promise<UpdateResult> {
     return this.userService.updateUser(id, updateUser);
+  }
+
+  @Post('/resetPassword')
+  resetPassword(
+    @Body() resetPasswordDto: ResetPasswordRequestDto,
+  ): Promise<any> {
+    return this.userService.resetPassword(resetPasswordDto);
   }
 }
