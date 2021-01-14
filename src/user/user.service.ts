@@ -122,25 +122,25 @@ export class UserService {
   }
 
   async resetPassword(userData: ResetPasswordRequestDto): Promise<any> {
-    console.log(userData);
-
-    try {
-      if (
-        await User.findOne({
-          where: [{ username: userData.username, email: userData.email }],
-        })
-      ) {
-        return {
-          ok: 'Reset link send to your mail.',
-        };
-      } else {
-        return {
-          error: 'Username or mail not exist.',
-        };
-      }
-    } catch (err) {
-      return err;
+    if (
+      await User.findOne({
+        where: [{ username: userData.username, email: userData.email }],
+      })
+    ) {
+      return {
+        ok: 'Reset link send to your mail.',
+      };
+    } else {
+      throw new HttpException(
+        `Username or mail not exist`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
+    // try {
+
+    // } catch (err) {
+    //   throw new HttpException(err, HttpStatus.BAD_REQUEST);
+    // }
   }
 
   @Command({
