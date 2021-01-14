@@ -35,4 +35,18 @@ export class MailService {
       context: { username, email, id },
     });
   }
+
+  async sendResetPasswordLink(
+    { username, email }: User,
+    resetPasswordLink: string,
+  ): Promise<any> {
+    const subject = `Nowa rejestracja w Atlasie grzybów`;
+
+    await this.mailerService.sendMail({
+      to: email,
+      subject,
+      template: 'resetPassword',
+      context: { username, email, resetPasswordLink },
+    });
+  }
 }
