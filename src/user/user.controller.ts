@@ -18,7 +18,6 @@ import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';
 import { User } from './user.entity';
 import { UpdateResult } from 'typeorm';
 import { UserObj } from 'src/decorators/user-obj.decorator';
-import { stringify } from 'querystring';
 import { ResetPasswordRequestDto } from './dto/resetPasswordRequest.dto';
 
 @Controller('user')

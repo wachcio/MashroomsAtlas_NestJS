@@ -132,7 +132,7 @@ export class UserService {
 
     if (findUserData) {
       findUserData.resetPasswordToken = generatorTokenLink(60);
-      console.log('token', findUserData.resetPasswordToken);
+      // console.log('token', findUserData.resetPasswordToken);
 
       await User.update(findUserData.id, findUserData);
       await this.mailService.sendResetPasswordLink(findUserData);
