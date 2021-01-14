@@ -36,11 +36,13 @@ export class MailService {
     });
   }
 
-  async sendResetPasswordLink(
-    { username, email }: User,
-    resetPasswordLink: string,
-  ): Promise<any> {
-    const subject = `Nowa rejestracja w Atlasie grzybów`;
+  async sendResetPasswordLink({
+    username,
+    email,
+    resetPasswordToken,
+  }: User): Promise<any> {
+    const subject = `Link resetu hasła dla ${username}`;
+    const resetPasswordLink = `${process.env.APP_DOMAIN}user/resetPassword/${resetPasswordToken}`;
 
     await this.mailerService.sendMail({
       to: email,

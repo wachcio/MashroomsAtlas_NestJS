@@ -129,10 +129,10 @@ export class UserService {
     });
 
     if (findUserData) {
-      const user = new User();
-      user.resetPasswordToken = crypto.randomBytes(40).toString('hex');
-      await User.update(findUserData.id, user);
+      findUserData.resetPasswordToken = crypto.randomBytes(40).toString('hex');
 
+      await User.update(findUserData.id, findUserData);
+      await this.mailService.sendResetPasswordLink(findUserData);
       return {
         ok: 'Reset link send to your mail.',
       };
