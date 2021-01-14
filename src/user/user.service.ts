@@ -7,8 +7,10 @@ import { Command, Console } from 'nestjs-console';
 import { validateEmail } from 'src/utils/validate-email';
 import { MailService } from '../mail/mail.service';
 import { ResetPasswordRequestDto } from './dto/resetPasswordRequest.dto';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const crypto = require('crypto');
+import {
+  generatorPassword,
+  generatorTokenLink,
+} from 'src/utils/random-string-generator';
 
 @Injectable()
 @Console({
@@ -129,7 +131,8 @@ export class UserService {
     });
 
     if (findUserData) {
-      findUserData.resetPasswordToken = crypto.randomBytes(40).toString('hex');
+      findUserData.resetPasswordToken = generatorTokenLink(60);
+      console.log('token', findUserData.resetPasswordToken);
 
       await User.update(findUserData.id, findUserData);
       await this.mailService.sendResetPasswordLink(findUserData);
@@ -150,11 +153,18 @@ export class UserService {
   }
 
   async resetPasswordToken(resetPasswordToken: string): Promise<any> {
-    if (
-      await User.findOne({
-        where: [{ resetPasswordToken }],
-      })
-    ) {
+    const user = await User.findOne({
+      where: [{ resetPasswordToken }],
+    });
+
+    if (user) {
+      const newPassword = generatorPassword(16);
+      console.log('new Password', newPassword);
+
+      user.pwdHash = hashPwd(newPassword);
+      user.resetPasswordToken = null;
+      await User.update(user.id, user);
+      await this.mailService.sendNewPassword(user, newPassword);
       return {
         ok: 'We send new password to your email.',
       };

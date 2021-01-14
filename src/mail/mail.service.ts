@@ -51,4 +51,18 @@ export class MailService {
       context: { username, email, resetPasswordLink },
     });
   }
+
+  async sendNewPassword(
+    { username, email }: User,
+    newPassword: string,
+  ): Promise<any> {
+    const subject = `Nowe hasło dla ${username}`;
+
+    await this.mailerService.sendMail({
+      to: email,
+      subject,
+      template: 'newPassword',
+      context: { username, email, newPassword },
+    });
+  }
 }
