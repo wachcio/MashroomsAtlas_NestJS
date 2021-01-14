@@ -33,4 +33,10 @@ export class User extends BaseEntity {
     default: null,
   })
   currentTokenId: string | null;
+
+  @Column({
+    nullable: true,
+    default: null,
+  })
+  resetPasswordToken: string | null;
 }

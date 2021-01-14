@@ -7,6 +7,8 @@ import { Command, Console } from 'nestjs-console';
 import { validateEmail } from 'src/utils/validate-email';
 import { MailService } from '../mail/mail.service';
 import { ResetPasswordRequestDto } from './dto/resetPasswordRequest.dto';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const crypto = require('crypto');
 
 @Injectable()
 @Console({
@@ -122,11 +124,15 @@ export class UserService {
   }
 
   async resetPassword(userData: ResetPasswordRequestDto): Promise<any> {
-    if (
-      await User.findOne({
-        where: [{ username: userData.username, email: userData.email }],
-      })
-    ) {
+    const findUserData = await User.findOne({
+      where: [{ username: userData.username, email: userData.email }],
+    });
+
+    if (findUserData) {
+      const user = new User();
+      user.resetPasswordToken = crypto.randomBytes(40).toString('hex');
+      await User.update(findUserData.id, user);
+
       return {
         ok: 'Reset link send to your mail.',
       };
