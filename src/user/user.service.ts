@@ -257,4 +257,28 @@ export class UserService {
 
     console.log(await this.changePassword(user, { oldPwd, newPwd }));
   }
+
+  @Command({
+    command: 'resetPassword <userId>',
+    description: 'Reset user password',
+  })
+  async resetPasswordCmd(userId: string) {
+    const user = await User.findOne({
+      where: [{ id: userId }],
+    });
+
+    // console.log('user', user);
+
+    const newPassword = generatorPassword(16);
+    // console.log('new Password', newPassword);
+
+    user.pwdHash = hashPwd(newPassword);
+    user.resetPasswordToken = null;
+    user.resetPasswordExpirationDate = null;
+    await User.update(user.id, user);
+    await this.mailService.sendNewPassword(user, newPassword);
+    return {
+      ok: 'We send new password to your email.',
+    };
+  }
 }
