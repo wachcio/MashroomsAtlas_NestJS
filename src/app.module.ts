@@ -9,6 +9,7 @@ import { ImageModule } from './image/image.module';
 import { ConsoleModule } from 'nestjs-console';
 import { MailModule } from './mail/mail.module';
 import { envConfigFilePath } from './utils/env-config-file-path';
+import { CronModule } from './cron/cron.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { envConfigFilePath } from './utils/env-config-file-path';
     ImageModule,
     ConsoleModule,
     MailModule,
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService],
