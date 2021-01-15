@@ -131,9 +131,12 @@ export class UserService {
     });
 
     if (findUserData) {
+      findUserData.currentTokenId = null;
       findUserData.resetPasswordToken = generatorTokenLink(60);
-      // console.log('token', findUserData.resetPasswordToken);
-
+      console.log('token', findUserData.resetPasswordToken);
+      findUserData.resetPasswordExpirationDate = new Date(
+        new Date().getTime() + 60 * 60 * 1000,
+      );
       await User.update(findUserData.id, findUserData);
       await this.mailService.sendResetPasswordLink(findUserData);
       return {
@@ -157,19 +160,26 @@ export class UserService {
       where: [{ resetPasswordToken }],
     });
 
-    if (user) {
+    if (user && user.resetPasswordExpirationDate > new Date()) {
       const newPassword = generatorPassword(16);
       console.log('new Password', newPassword);
 
       user.pwdHash = hashPwd(newPassword);
       user.resetPasswordToken = null;
+      user.resetPasswordExpirationDate = null;
       await User.update(user.id, user);
       await this.mailService.sendNewPassword(user, newPassword);
       return {
         ok: 'We send new password to your email.',
       };
     } else {
-      throw new HttpException(`Link is not valid.`, HttpStatus.BAD_REQUEST);
+      user.resetPasswordToken = null;
+      user.resetPasswordExpirationDate = null;
+      await User.update(user.id, user);
+      throw new HttpException(
+        `Link is not valid or expierd.`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     // try {
 

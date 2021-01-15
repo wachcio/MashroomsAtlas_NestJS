@@ -39,4 +39,11 @@ export class User extends BaseEntity {
     default: null,
   })
   resetPasswordToken: string | null;
+
+  @Column({
+    type: 'datetime',
+    nullable: true,
+    default: null,
+  })
+  resetPasswordExpirationDate: Date | null;
 }
