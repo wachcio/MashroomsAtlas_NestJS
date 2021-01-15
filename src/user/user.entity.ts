@@ -45,5 +45,5 @@ export class User extends BaseEntity {
     nullable: true,
     default: null,
   })
-  resetPasswordExpirationDate: Date | null;
+  resetPasswordExpirationDate: Date | string | null;
 }

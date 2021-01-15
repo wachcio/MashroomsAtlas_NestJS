@@ -40,15 +40,23 @@ export class MailService {
     username,
     email,
     resetPasswordToken,
+    resetPasswordExpirationDate,
   }: User): Promise<any> {
     const subject = `Link resetu hasła dla ${username}`;
     const resetPasswordLink = `${process.env.APP_DOMAIN}user/resetPassword/${resetPasswordToken}`;
+
+    resetPasswordExpirationDate = resetPasswordExpirationDate.toLocaleString();
 
     await this.mailerService.sendMail({
       to: email,
       subject,
       template: 'resetPassword',
-      context: { username, email, resetPasswordLink },
+      context: {
+        username,
+        email,
+        resetPasswordLink,
+        resetPasswordExpirationDate,
+      },
     });
   }
 

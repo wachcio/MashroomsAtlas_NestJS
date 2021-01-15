@@ -137,6 +137,7 @@ export class UserService {
       findUserData.resetPasswordExpirationDate = new Date(
         new Date().getTime() + 60 * 60 * 1000,
       );
+
       await User.update(findUserData.id, findUserData);
       await this.mailService.sendResetPasswordLink(findUserData);
       return {
