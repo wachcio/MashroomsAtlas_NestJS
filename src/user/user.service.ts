@@ -135,7 +135,8 @@ export class UserService {
       findUserData.resetPasswordToken = generatorTokenLink(60);
       console.log('token', findUserData.resetPasswordToken);
       findUserData.resetPasswordExpirationDate = new Date(
-        new Date().getTime() + 60 * 60 * 1000,
+        new Date().getTime() + 60 * 1000,
+        // new Date().getTime() + 60 * 60 * 1000,
       );
 
       await User.update(findUserData.id, findUserData);
