@@ -4,8 +4,7 @@ import { User } from 'src/user/user.entity';
 
 @Injectable()
 export class CronService {
-  //   @Cron(CronExpression.EVERY_DAY_AT_1PM)
-  @Cron('* * * * *')
+  @Cron(CronExpression.EVERY_DAY_AT_1AM)
   async clearExpiredPasswordToken() {
     const user = await User.find();
 
