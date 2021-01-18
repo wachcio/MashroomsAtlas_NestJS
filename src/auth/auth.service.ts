@@ -6,7 +6,7 @@ import { hashPwd } from '../utils/hash-pwd';
 import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { JwtPayload } from './jwt.strategy';
-import { RegisterUserResponse } from '../interfaces/user';
+import { RegisterUserResponse, userRoleEnum } from '../interfaces/user';
 
 @Injectable()
 export class AuthService {
@@ -35,6 +35,42 @@ export class AuthService {
     return token;
   }
 
+  userPermissions(role): any {
+    if (role == userRoleEnum.admin) {
+      return {
+        mushrooms: { get: true, add: true, delete: true, update: true },
+        images: { get: true, add: true, delete: true },
+        users: {
+          get: true,
+          add: true,
+          delete: true,
+        },
+      };
+    }
+    if (role == userRoleEnum.moderator) {
+      return {
+        mushrooms: { get: true, add: true, delete: false, update: true },
+        images: { get: true, add: true, delete: false },
+        users: {
+          get: false,
+          add: false,
+          delete: false,
+        },
+      };
+    }
+    if (role == userRoleEnum.user) {
+      return {
+        mushrooms: { get: true, add: false, delete: false, update: false },
+        images: { get: true, add: false, delete: false },
+        users: {
+          get: false,
+          add: false,
+          delete: false,
+        },
+      };
+    }
+  }
+
   async login(req: AuthLoginDto, res: Response): Promise<any> {
     // console.log(req);
 
@@ -50,13 +86,20 @@ export class AuthService {
 
       const token = await this.createToken(await this.generateToken(user));
       const { username, email, role } = user;
+
       return res
         .cookie('jwt', token.accessToken, {
           secure: false,
           domain: process.env.JWT_DOMAIN,
           httpOnly: true,
         })
-        .json({ ok: true, username, email, role });
+        .json({
+          ok: true,
+          username,
+          email,
+          role,
+          permissions: this.userPermissions(role),
+        });
     } catch (e) {
       return res.json({ error: e.message });
     }
