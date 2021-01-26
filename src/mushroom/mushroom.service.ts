@@ -8,6 +8,8 @@ import * as fs from 'fs';
 import { mushroomImagePath } from 'src/utils/imagePath';
 import { Command, Console } from 'nestjs-console';
 
+import slugify from 'slugify';
+
 @Injectable()
 @Console({
   name: 'mushrooms',
@@ -97,6 +99,7 @@ export class MushroomService {
       await newMushroomDescription.save();
 
       newMushroom.polishName = mushroom.polishName;
+      newMushroom.slug = slugify(mushroom.polishName);
       newMushroom.scientificName = mushroom.scientificName;
       newMushroom.anotherNames = mushroom.anotherNames;
       newMushroom.application = mushroom.application;

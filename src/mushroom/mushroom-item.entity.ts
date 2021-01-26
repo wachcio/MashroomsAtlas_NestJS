@@ -22,14 +22,14 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
     length: 255,
     unique: true,
   })
-  polishName: string;
+  slug: string;
 
   @Column({
     type: 'varchar',
     length: 255,
     unique: true,
   })
-  slug: string;
+  polishName: string;
 
   @Column({
     type: 'varchar',
