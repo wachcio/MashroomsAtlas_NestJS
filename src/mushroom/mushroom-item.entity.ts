@@ -29,6 +29,13 @@ export class MushroomItem extends BaseEntity implements MushroomDto {
     length: 255,
     unique: true,
   })
+  slug: string;
+
+  @Column({
+    type: 'varchar',
+    length: 255,
+    unique: true,
+  })
   scientificName: string;
 
   @Column({
