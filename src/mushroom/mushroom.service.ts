@@ -9,6 +9,7 @@ import { mushroomImagePath } from 'src/utils/imagePath';
 import { Command, Console } from 'nestjs-console';
 
 import slugify from 'slugify';
+import { slugifyConfig } from 'src/utils/slugify-config';
 
 @Injectable()
 @Console({
@@ -69,7 +70,7 @@ export class MushroomService {
   }
 
   async createMushroom(mushroom): Promise<MushroomItem> {
-    console.log(mushroom);
+    // console.log(mushroom);
 
     if (Object.keys(mushroom).length === 0) {
       throw new HttpException(
@@ -99,7 +100,7 @@ export class MushroomService {
       await newMushroomDescription.save();
 
       newMushroom.polishName = mushroom.polishName;
-      newMushroom.slug = slugify(mushroom.polishName);
+      newMushroom.slug = slugify(mushroom.polishName, slugifyConfig);
       newMushroom.scientificName = mushroom.scientificName;
       newMushroom.anotherNames = mushroom.anotherNames;
       newMushroom.application = mushroom.application;
