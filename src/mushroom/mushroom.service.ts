@@ -223,7 +223,7 @@ export class MushroomService {
       where: [{ id }],
       relations: ['description'],
     });
-    console.log(descriptionId);
+    // console.log(descriptionId);
 
     if (descriptionId == undefined) {
       throw new HttpException(
@@ -237,6 +237,7 @@ export class MushroomService {
         updateMushroom.description,
       );
       updateMushroom.description = descriptionId.description.id;
+      updateMushroom.slug = slugify(updateMushroom.polishName, slugifyConfig);
       return await MushroomItem.update(id, updateMushroom);
     } catch (err) {
       if (err.code === 'ER_DUP_ENTRY') {
