@@ -13,8 +13,7 @@ import {
 import { ImageService } from './image.service';
 import { ImageDto } from './dto/image.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import * as path from 'path';
-import { multerStorage, storageDir } from '../utils/storage';
+import { multerStorage } from '../utils/storage';
 import { MulterDiskUploadedFiles } from '../interceptors/files';
 import { AuthGuard } from '@nestjs/passport';
 import { UserRoleAdminGuard } from 'src/guards/user-role-admin.guard';

@@ -6,7 +6,7 @@ import { hashPwd } from '../utils/hash-pwd';
 import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { JwtPayload } from './jwt.strategy';
-import { RegisterUserResponse, userRoleEnum } from '../interfaces/user';
+import { userRoleEnum } from '../interfaces/user';
 
 @Injectable()
 export class AuthService {

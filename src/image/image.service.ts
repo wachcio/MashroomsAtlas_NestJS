@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { MulterDiskUploadedFiles } from 'src/interceptors/files';
 import { Image } from './entities/image.entity';
 import * as fs from 'fs';
@@ -6,7 +6,6 @@ import * as path from 'path';
 import { mushroomImagePath } from 'src/utils/imagePath';
 import { MushroomItem } from 'src/mushroom/mushroom-item.entity';
 import { Command, Console } from 'nestjs-console';
-import { response } from 'express';
 
 @Injectable()
 @Console({
