@@ -43,6 +43,7 @@ export class MushroomService {
         'scientificName',
         'anotherNames',
         'application',
+        'slug',
       ],
     });
   }
