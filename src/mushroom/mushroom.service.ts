@@ -44,6 +44,8 @@ export class MushroomService {
         'anotherNames',
         'application',
         'slug',
+        'isLegallyProtected',
+        'approvedForTrade',
       ],
     });
   }
