@@ -41,6 +41,10 @@ export class MushroomController {
   ): Promise<MushroomItem[]> {
     return this.mushroomService.findMushrooms(searchText);
   }
+  @Get('/slug/:slug')
+  findSlugMushroom(@Param('slug') slug: string): Promise<MushroomItem> {
+    return this.mushroomService.findSlugMushroom(slug);
+  }
 
   @Post('/')
   @UseGuards(AuthGuard('jwt'), UserRoleModeratorsGuard)

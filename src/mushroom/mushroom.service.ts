@@ -72,6 +72,21 @@ export class MushroomService {
     console.log(await this.findMushrooms(searchText));
   }
 
+  async findSlugMushroom(slug: string): Promise<MushroomItem> {
+    return await MushroomItem.findOne({
+      where: { slug: slug },
+      relations: ['description'],
+    });
+  }
+
+  @Command({
+    command: 'findSlug <searchText>',
+    description: 'Find mushroom on slug (slug)',
+  })
+  async findSlugMushroomCmd(searchText) {
+    console.log(await this.findSlugMushroom(searchText));
+  }
+
   async createMushroom(mushroom): Promise<MushroomItem> {
     // console.log(mushroom);
 
